@@ -6,5 +6,19 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-User.create(name: "Bill the Butcher", email: "bill@bill.bill", password: 'password')
+User.create(Faker::TwinPeaks.character, email: "bill@bill.bill", password: 'password')
 end
+
+# name: Faker::Beer.name
+# style: Faker::Beer.style
+# ibu: Faker::Beer.ibu.gsub(" IBU", "")
+# abv: Faker::Beer.alcohol.gsub("%", "")
+# srm: Faker::Beer.blg.gsub("°Blg", "")
+
+# 3 times do for each type of ingredient (pre-select the type)
+# Faker::Beer.hop
+# Faker::Beer.yeast
+# Faker::Beer.malts
+# water: Faker::TwinPeaks.location
+
+# origin: Faker::Address.country
