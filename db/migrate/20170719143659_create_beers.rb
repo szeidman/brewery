@@ -4,7 +4,7 @@ class CreateBeers < ActiveRecord::Migration[5.1]
       t.string :name
       t.integer :user_id
       t.string :style
-      t.float :abv
+      t.float :alcohol
       t.float :ibu
       t.float :srm
       t.text :description
