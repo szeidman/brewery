@@ -1,7 +1,7 @@
 <ul>
 <%= link_to ingredient_path(ingredient) do %>
   <li>
-    <%= ingredient.name %>
+    <%= ingredient.name -%> (<%= ingredient.kind -%>)
   </li>
 <% end %>
 </ul>

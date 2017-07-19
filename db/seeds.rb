@@ -26,28 +26,28 @@ end
 5.times do
   Ingredient.create(
   name: Faker::Beer.unique.hop,
-  kind: "Hops",
+  kind: "hops",
   origin: Faker::Address.country
   )
 end
 5.times do
   Ingredient.create(
   name: Faker::Beer.unique.malts,
-  kind: "Grain",
+  kind: "malt",
   origin: Faker::Address.country
   )
 end
 5.times do
   Ingredient.create(
   name: Faker::Beer.unique.yeast,
-  kind: "Yeast",
+  kind: "yeast",
   origin: Faker::Address.country
   )
 end
 5.times do
   Ingredient.create(
   name: Faker::TwinPeaks.unique.location,
-  kind: "Water",
+  kind: "water",
   origin: Faker::Address.country
   )
 end
