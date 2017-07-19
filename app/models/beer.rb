@@ -20,6 +20,17 @@ class Beer < ApplicationRecord
   end
 
   def alcohol
+    if self.abv > 7
+      "Lotsa booze"
+    elsif self.abv > 5.5
+      "More than a little."
+    elsif self.abv > 4.5
+      "Average."
+    elsif self.abv > 3.5
+      "Sessionable."
+    else
+      "Near beer."
+    end
   end
 
 end
