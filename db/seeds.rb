@@ -7,13 +7,13 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 User.create([
-  {name: Faker::TwinPeaks.character, email: "bill@bill.bill", password: 'password'},
+  {name: Faker::TwinPeaks.unique.character, email: "bill@bill.bill", password: 'password'},
   {name: Faker::TwinPeaks.character, email: "ted@ted.ted", password: 'password'}
   ])
 
 User.all.each do |user|
   5.times { Beer.create([
-    name: Faker::Beer.name,
+    name: Faker::Beer.unique.name,
     user_id: user.id,
     style: Faker::Beer.style,
     ibu: Faker::Beer.ibu.gsub(" IBU", ""),
@@ -25,28 +25,28 @@ end
 
 5.times do
   Ingredient.create(
-  name: Faker::Beer.hop,
+  name: Faker::Beer.unique.hop,
   kind: "Hops",
   origin: Faker::Address.country
   )
 end
 5.times do
   Ingredient.create(
-  name: Faker::Beer.malts,
+  name: Faker::Beer.unique.malts,
   kind: "Grain",
   origin: Faker::Address.country
   )
 end
 5.times do
   Ingredient.create(
-  name: Faker::Beer.yeast,
+  name: Faker::Beer.unique.yeast,
   kind: "Yeast",
   origin: Faker::Address.country
   )
 end
 5.times do
   Ingredient.create(
-  name: Faker::TwinPeaks.location,
+  name: Faker::TwinPeaks.unique.location,
   kind: "Water",
   origin: Faker::Address.country
   )
