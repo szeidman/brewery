@@ -23,22 +23,28 @@ User.all.each do |user|
 end
 #
 
-10.times do
+5.times do
   Ingredient.create(
   name: Faker::Beer.hop,
   kind: "Hops",
   origin: Faker::Address.country
   )
+end
+5.times do
   Ingredient.create(
   name: Faker::Beer.malts,
   kind: "Grain",
   origin: Faker::Address.country
   )
+end
+5.times do
   Ingredient.create(
   name: Faker::Beer.yeast,
   kind: "Yeast",
   origin: Faker::Address.country
   )
+end
+5.times do
   Ingredient.create(
   name: Faker::TwinPeaks.location,
   kind: "Water",
@@ -55,9 +61,15 @@ Ingredient.all.each do |ingredient|
   beer_id: counter,
   amount: Faker::Number.between(1, 10)
   )
-  if counter < 10
+  BeerIngredient.create(
+  ingredient_id: ingredient.id,
+  beer_id: counter + 5,
+  amount: Faker::Number.between(1, 10)
+  )
+  if counter < 5
     counter += 1
   else
     counter = 1
   end
+
 end
