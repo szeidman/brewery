@@ -1,21 +1,18 @@
-<nav class="navbar" style="background-color: #942b00">
+<nav class="navbar">
   <div class="container-fluid">
     <div class="navbar-header">
       <%= link_to "Torgo Brewery", root_path, class: "navbar-brand" %>
     </div>
-    <% if !!current_user %>
       <ul class="nav navbar-nav">
-        <li class="navbar-text">Logged in as <%= current_user.name %></li>
         <li><%= link_to "Beers", "/beers" %></li>
         <li><%= link_to "Ingredients", "/ingredients" %></li>
-        <li><%= link_to "Sign Out", destroy_user_session_path, method: 'delete' %></li>
+        <% if !!current_user %>
+          <li class="navbar-text"><span>Logged in as <%= current_user.name -%> &nbsp; (<%= link_to "Sign Out", destroy_user_session_path, method: 'delete' %>)</span></li>
+        <% else %>
+          <li><%= link_to "Create Account", new_user_registration_path %></li>
+          <li><%= link_to "Sign In", new_user_session_path %></li>
+        <% end %>
       </ul>
-    <% else %>
-      <ul class="nav navbar-nav">
-        <li><%= link_to "Create Account", new_user_registration_path %></li>
-        <li><%= link_to "Sign In", new_user_session_path %></li>
-      </ul>
-    <% end %>
   </div>
 
 </nav>
