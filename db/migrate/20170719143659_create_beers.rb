@@ -7,7 +7,6 @@ class CreateBeers < ActiveRecord::Migration[5.1]
       t.float :abv
       t.float :ibu
       t.float :srm
-      t.text :description
 
       t.timestamps
     end
