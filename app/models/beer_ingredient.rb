@@ -1,0 +1,2 @@
+class BeerIngredient < ApplicationRecord
+end

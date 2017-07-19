@@ -1,0 +1,2 @@
+module BeerIngredientsHelper
+end
