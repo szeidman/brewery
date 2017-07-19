@@ -1,0 +1,8 @@
+<h1><%= @ingredient.name -%> (<%= @ingredient.kind -%>)</h1>
+<br>
+<%= render partial: 'attribute', locals: {title: "Origin:", value: @ingredient.origin} %>
+<br>
+<h4> Found in: </h4>
+<% @ingredient.beers.each do |beer| %>
+  <%= render partial: 'beers/beer', locals: {beer: beer} %>
+<% end %>
