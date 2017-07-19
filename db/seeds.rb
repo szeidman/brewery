@@ -14,7 +14,7 @@ User.create([
 User.all.each do |user|
   5.times { Beer.create([
     name: Faker::Beer.name,
-    user_id: Faker::Number.between(1, 2),
+    user_id: user.id,
     style: Faker::Beer.style,
     ibu: Faker::Beer.ibu.gsub(" IBU", ""),
     abv: Faker::Beer.alcohol.gsub("%", ""),
@@ -23,14 +23,41 @@ User.all.each do |user|
 end
 #
 
+10.times do
+  Ingredient.create(
+  name: Faker::Beer.hop,
+  kind: "Hops",
+  origin: Faker::Address.country
+  )
+  Ingredient.create(
+  name: Faker::Beer.malts,
+  kind: "Grain",
+  origin: Faker::Address.country
+  )
+  Ingredient.create(
+  name: Faker::Beer.yeast,
+  kind: "Yeast",
+  origin: Faker::Address.country
+  )
+  Ingredient.create(
+  name: Faker::TwinPeaks.location,
+  kind: "Water",
+  origin: Faker::Address.country
+  )
+end
 #Beer.all.each do |beer|
 # {Ingredient.create , beer.id}
 
-
-# 3 times do for each type of ingredient (pre-select the type)
-# Faker::Beer.hop
-# Faker::Beer.yeast
-# Faker::Beer.malts
-# water: Faker::TwinPeaks.location
-
-# origin: Faker::Address.country
+counter = 1
+Ingredient.all.each do |ingredient|
+  BeerIngredient.create(
+  ingredient_id: ingredient.id,
+  beer_id: counter,
+  amount: Faker::Number.between(1, 10)
+  )
+  if counter < 10
+    counter += 1
+  else
+    counter = 1
+  end
+end
