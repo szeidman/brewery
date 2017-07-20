@@ -1,0 +1,3 @@
+<% if @beer %>
+  <p>Each batch of <%= link_to @beer.name, @beer -%> requires <strong><%= @amount -%>kg</strong> of this ingredient.</p>
+<% end %>

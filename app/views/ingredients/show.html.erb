@@ -2,13 +2,6 @@
 <h3>(<%= @ingredient.kind -%>)</h3>
 <br>
 <%= render partial: 'attribute', locals: {title: "Origin:", value: @ingredient.origin} %>
-<% if @beer %>
-  <p>Each batch of <%= @beer.name -%> requires <strong><%= @amount -%>kg</strong> of this ingredient.</p>
-<% end %>
+<%= render partial: 'amount' %>
 <br><br>
-<h4> <%= @beer ? "Also found in:" : "Found in:" %> </h4>
-<% @ingredient.beers.each do |beer| %>
-  <% if beer != @beer %>
-    <%= render partial: 'beers/beer', locals: {beer: beer} %>
-  <% end %>
-<% end %>
+<%= render partial: 'found' %>

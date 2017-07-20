@@ -1,0 +1,6 @@
+<h4> <%= @beer ? "Also found in:" : "Found in:" %> </h4>
+<% @ingredient.beers.each do |beer| %>
+  <% if beer != @beer %>
+    <%= render partial: 'beers/beer', locals: {beer: beer} %>
+  <% end %>
+<% end %>
