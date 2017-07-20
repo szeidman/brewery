@@ -33,7 +33,7 @@ class Beer < ApplicationRecord
     elsif self.ibu < 75
       "Getting hoppier"
     elsif self.ibu < 90
-      "Strong levels of hops"
+      "Strong hoppiness"
     else
       "Not for the uninitiated"
     end

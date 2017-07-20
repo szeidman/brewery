@@ -1,0 +1,4 @@
+<%= render partial: 'attribute', locals: {title: "Style:", value: @beer.style} %>
+<%= render partial: 'attribute', locals: {title: "ABV:", value: @beer.abv, suffix: "% (#{@beer.alcohol})"} %>
+<%= render partial: 'attribute', locals: {title: "IBU:", value: @beer.ibu, suffix: " (#{@beer.bitter})"} %>
+<%= render partial: 'attribute', locals: {title: "SRM (Color):", value: @beer.srm, suffix: " (#{@beer.color})"} %>
