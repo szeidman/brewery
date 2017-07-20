@@ -22,6 +22,7 @@ class IngredientsController < ApplicationController
     if @beer = Beer.find_by(id: params[:beer_id])
       if @ingredient = @beer.ingredients.find_by(id: params[:id])
         @ingredient
+        @amount = @beer.beer_ingredients.find_by(ingredient_id: params[:id]).amount
       else
         redirect_to beer_ingredients_path(@beer), alert: "Ingredient not found."
       end

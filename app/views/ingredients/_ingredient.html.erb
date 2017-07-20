@@ -1,7 +1,15 @@
 <ul>
-<%= link_to ingredient_path(ingredient) do %>
-  <li>
-    <%= ingredient.name -%> (<%= ingredient.kind -%>)
-  </li>
+<% if !!@beer %>
+  <%= link_to beer_ingredient_path(@beer, ingredient) do %>
+    <li>
+      <%= ingredient.name -%><%= ingredient.name -%> (<%= ingredient.kind -%>)
+    </li>
+  <% end %>
+<% else %>
+  <%= link_to ingredient_path(ingredient) do %>
+    <li>
+      <%= ingredient.name -%> (<%= ingredient.kind -%>)
+    </li>
+  <% end %>
 <% end %>
 </ul>
