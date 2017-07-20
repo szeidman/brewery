@@ -9,10 +9,25 @@ class BeersController < ApplicationController
     @beer = Beer.new
   end
 
+  def create
+    @beer = Beer.new(beer_params)
+    if @beer.save
+      redirect_to @beer
+    else
+      render :new
+      # errors alert
+    end
+  end
+
   def edit
   end
 
   def update
+    if @beer.update(beer_params)
+      redirect_to @beer, notice: 'Beer updated.'
+    else
+      render :edit
+    end
   end
 
   def destroy
@@ -32,7 +47,7 @@ class BeersController < ApplicationController
     end
 
     def beer_params
-      params.require(:beer).permit(:name, :style, :abv, :ibu, :srm, :user_id, ingredients_attributes:[:name, :kind, :origin])
+      params.require(:beer).permit(:name, :style, :abv, :ibu, :srm, :user_id, beer_ingredients_attributes:[:amount], ingredients_attributes:[:name, :kind, :origin])
     end
 
   end

@@ -1,5 +1,5 @@
 class IngredientsController < ApplicationController
-  before_action :set_ingredient, only: [:show, :edit, :update, :destroy]
+  before_action :set_ingredient, only: [:edit, :update, :destroy]
   def index
     if params[:beer_id]
        @beer = Beer.find(params[:beer_id])
@@ -28,7 +28,6 @@ class IngredientsController < ApplicationController
   end
 
   def edit
-    set_ingredient
   end
 
   def update
