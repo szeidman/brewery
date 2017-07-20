@@ -5,9 +5,13 @@
   <%= f.text_field :origin %><br>
   <label><strong>Type of Ingredient</strong></label><br>
   <% kinds = ["hops", "yeast", "malt", "water"] %>
-  <% kinds.each do |kind| %>
-    <%= radio_button_tag(:kind, kind) %>
-    <%= label_tag(:kind, kind) %><br>
+  <% kinds.each do |one_kind| %>
+    <% if @ingredient.kind == one_kind %>
+      <%= radio_button_tag(:kind, one_kind, checked = true) %>
+    <% else %>
+      <%= radio_button_tag(:kind, one_kind, checked = false) %>
+    <% end %>
+    <%= label_tag(:kind, one_kind ) %><br>
   <% end %>
   <%= f.submit %>
 <% end %>
