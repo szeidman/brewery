@@ -35,8 +35,7 @@ class IngredientsController < ApplicationController
     if @ingredient.update(ingredient_params)
       redirect_to @ingredient, notice: 'Ingredient updated.'
     else
-      redirect_to edit_ingredient_path(@ingredient)
-      # errors alert
+      render :edit
     end
   end
 
