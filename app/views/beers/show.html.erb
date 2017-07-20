@@ -6,7 +6,7 @@
 <%= render partial: 'attribute', locals: {title: "IBU:", value: @beer.ibu, suffix: " (#{@beer.bitter})"} %>
 <%= render partial: 'attribute', locals: {title: "SRM (Color):", value: @beer.srm, suffix: " (#{@beer.color})"} %>
 <br>
-<h4> Made with: </h4>
+<h4><%= link_to "Made with:", root_path </h4>
 <% @beer.ingredients.each do |ingredient| %>
   <%= render partial: 'ingredients/ingredient', locals: {ingredient: ingredient} %>
 <% end %>

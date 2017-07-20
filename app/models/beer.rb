@@ -3,6 +3,8 @@ class Beer < ApplicationRecord
   has_many :beer_ingredients
   has_many :ingredients, through: :beer_ingredients
 
+  scope :darkest, -> { where(kind: 'water') }
+
   def color
     if self.srm < 3.0
       "Pale Yellow"
@@ -20,7 +22,9 @@ class Beer < ApplicationRecord
   end
 
   def alcohol
-    if self.abv > 7
+    if self.abv > 9.5
+      "It'll getcha drunk"
+    elsif self.abv > 7
       "Lotsa booze"
     elsif self.abv > 5.5
       "More than a little."
