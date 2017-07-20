@@ -6,6 +6,7 @@ class BeersController < ApplicationController
   end
 
   def new
+    @beer = Beer.new
   end
 
   def edit
