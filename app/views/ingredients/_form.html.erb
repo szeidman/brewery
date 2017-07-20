@@ -11,6 +11,9 @@
 
 <%= form_for @ingredient do |f| %>
   <br>
+  <%# if @beer
+    <% hidden_field for beer_id, add amount to form
+  <% end %>
   <%= f.label :name %>
   <%= f.text_field :name %><br>
   <%= f.label :origin %>

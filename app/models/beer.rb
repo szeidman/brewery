@@ -32,8 +32,7 @@ class Beer < ApplicationRecord
   #  self.ingredients.collect {|ingredient| ingredient.name}
   #end
 
-  def amount
-    find_ingredient.amount
+  def beer_ingredients_attributes=()
   end
 
   def find_ingredient(ingredient_id)

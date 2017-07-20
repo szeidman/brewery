@@ -7,6 +7,10 @@ class BeersController < ApplicationController
 
   def new
     @beer = Beer.new
+    @beer.beer_ingredients.build
+    @beer.beer_ingredients.each do |i|
+      i.build_ingredient
+    end
   end
 
   def create
@@ -47,7 +51,7 @@ class BeersController < ApplicationController
     end
 
     def beer_params
-      params.require(:beer).permit(:name, :style, :abv, :ibu, :srm, :user_id, beer_ingredients_attributes:[:amount], ingredients_attributes:[:name, :kind, :origin])
+      params.require(:beer).permit(:name, :style, :abv, :ibu, :srm, :user_id, beer_ingredients_attributes: [:id, :amount, ingredient_attributes: [:id, :name, :kind, :origin]])
     end
 
   end

@@ -22,12 +22,16 @@
   <%= f.number_field :ibu %><br>
   <%= f.label :srm %>
   <%= f.number_field :srm, class: 'text_field', step: 0.1 %><br>
-  <%= f.label :ingredient_name %>
-  <%= f.collection_select :ingredient_name, Ingredient.all, :id, :name %>
-  <%= f.label :ingredient_amount %>
-  <%= f.number_field :ingredient_amount %>
-
-
-
+    <%= f.fields_for :beer_ingredients do |b| %>
+      <%= b.number_field :amount %><br>
+      <%= b.fields_for :ingredient do |i| %>
+        <%= i.label :name %><br>
+        <%= i.text_field :name %><br>
+        <%= i.label :origin %>
+        <%= i.text_field :origin %><br>
+        <%= i.label :kind %>
+        <%= i.text_field :kind %><br>
+      <% end %>
+    <% end %>
   <%= f.submit %>
 <% end %>
