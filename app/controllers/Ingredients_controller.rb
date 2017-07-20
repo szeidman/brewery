@@ -1,5 +1,7 @@
 class IngredientsController < ApplicationController
   before_action :set_ingredient, only: [:edit, :update, :destroy]
+  helper_method :show_with_beer
+
   def index
     if params[:beer_id]
        @beer = Beer.find(params[:beer_id])

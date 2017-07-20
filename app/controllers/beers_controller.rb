@@ -12,7 +12,7 @@ class BeersController < ApplicationController
   def create
     @beer = Beer.new(beer_params)
     if @beer.save
-      redirect_to @beer
+      redirect_to @beer, notice: 'Beer created.'
     else
       render :new
       # errors alert

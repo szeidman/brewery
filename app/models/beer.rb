@@ -14,6 +14,32 @@ class Beer < ApplicationRecord
 
   scope :darkest, -> { where(kind: 'water') }
   #maximum("srm")
+
+  #def beer_ingredient_attributes=(beer_ingredient_attributes)
+  #  ingredient = Ingredient.find_or_create_by(name: attributes.name)
+  #  IngredientAttribute.create(beer_id: self.id, ingredient_id: ingredient.id, amount: attributes.amount)
+  #  self.beer_ingredients.build << ingredient
+  #end
+
+  #def ingredient_attributes=(attributes)
+
+  #def add_ingredient(ingredient_id)
+  #  beer_ingredient = self.beer_ingredient.find_by(ingredient_id: ingredient_id)
+  #    if beer_ingredient
+  #      beer_ingredient.update(params:[])
+  #  if beer_ingredient
+  #def ingredient_attributes
+  #  self.ingredients.collect {|ingredient| ingredient.name}
+  #end
+
+  def amount
+    find_ingredient.amount
+  end
+
+  def find_ingredient(ingredient_id)
+    self.beer_ingredients.find_by(ingredient_id: ingredient_id)
+  end
+
   def color
     if self.srm < 3.0
       "Pale Yellow"

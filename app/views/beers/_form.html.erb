@@ -11,16 +11,23 @@
 
 <%= form_for @beer do |f| %>
   <br>
+  <%= f.hidden_field :user_id, value: @beer.user_id ||= current_user.id %>
   <%= f.label :name %>
   <%= f.text_field :name %><br>
   <%= f.label :style %>
   <%= f.text_field :style %><br>
   <%= f.label :abv %>
-  <%= f.number_field :srm, class: 'text_field', step: 0.1 %><br>
+  <%= f.number_field :abv, class: 'text_field', step: 0.1 %><br>
   <%= f.label :ibu %>
-  <%= f.number_field :srm %><br>
+  <%= f.number_field :ibu %><br>
   <%= f.label :srm %>
   <%= f.number_field :srm, class: 'text_field', step: 0.1 %><br>
+  <%= f.label :ingredient_name %>
+  <%= f.collection_select :ingredient_name, Ingredient.all, :id, :name %>
+  <%= f.label :ingredient_amount %>
+  <%= f.number_field :ingredient_amount %>
+
+
 
   <%= f.submit %>
 <% end %>
