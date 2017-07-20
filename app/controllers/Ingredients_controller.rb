@@ -1,4 +1,5 @@
 class IngredientsController < ApplicationController
+  before_action :set_ingredient, only: [:show, :edit, :update, :destroy]
   def index
     if params[:beer_id]
        @beer = Beer.find(params[:beer_id])
@@ -21,12 +22,22 @@ class IngredientsController < ApplicationController
     if @ingredient.save
       redirect_to @ingredient
     else
-      redirect_to new_ingredient_path
+      render :new
+      # errors alert
     end
   end
 
   def edit
-    @ingredient = Ingredient.find(params[:id])
+    set_ingredient
+  end
+
+  def update
+    if @ingredient.update(ingredient_params)
+      redirect_to @ingredient, notice: 'Ingredient updated.'
+    else
+      redirect_to edit_ingredient_path(@ingredient)
+      # errors alert
+    end
   end
 
   def show
@@ -38,7 +49,7 @@ class IngredientsController < ApplicationController
         redirect_to beer_ingredients_path(@beer), alert: "Ingredient not found."
       end
     else
-      @ingredient = Ingredient.find(params[:id])
+      set_ingredient
     end
   end
 
@@ -46,6 +57,10 @@ class IngredientsController < ApplicationController
 
     def ingredient_params
       params.require(:ingredient).permit(:name, :kind, :origin)
+    end
+
+    def set_ingredient
+      @ingredient = Ingredient.find(params[:id])
     end
 
 end
