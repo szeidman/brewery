@@ -1,12 +1,15 @@
 <h1><%= @beer.name %></h1>
 <h4> Brewed by <%= @beer.user.name %></h4>
 <br>
+
 <%= render partial: 'attribute', locals: {title: "Style:", value: @beer.style} %>
 <%= render partial: 'attribute', locals: {title: "ABV:", value: @beer.abv, suffix: "% (#{@beer.alcohol})"} %>
 <%= render partial: 'attribute', locals: {title: "IBU:", value: @beer.ibu, suffix: " (#{@beer.bitter})"} %>
 <%= render partial: 'attribute', locals: {title: "SRM (Color):", value: @beer.srm, suffix: " (#{@beer.color})"} %>
+
 <br>
-<h4><%= link_to "Made with:", root_path </h4>
+
+<h4><%= link_to "Made with:", beer_ingredients_path %></h4>
 <% @beer.ingredients.each do |ingredient| %>
   <%= render partial: 'ingredients/ingredient', locals: {ingredient: ingredient} %>
 <% end %>

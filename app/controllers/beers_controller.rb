@@ -1,4 +1,6 @@
 class BeersController < ApplicationController
+  before_action :set_beer, only: [:show, :edit, :update, :destroy]
+
   def index
     @beers = Beer.all
   end
@@ -9,11 +11,26 @@ class BeersController < ApplicationController
   def edit
   end
 
+  def update
+  end
+
+  def destroy
+  end
+
   def show
-    @beer = Beer.find(params[:id])
   end
 
   def recipe
     @beer = Beer.find(params[:id])
   end
+
+  private
+
+    def set_beer
+      @beer = Beer.find(params[:id])
+    end
+
+    def beer_params
+    end
+
 end
