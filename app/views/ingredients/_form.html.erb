@@ -1,0 +1,13 @@
+<%= form_for @ingredient do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name %><br>
+  <%= f.label :origin %>
+  <%= f.text_field :origin %><br>
+  <label><strong>Type of Ingredient</strong></label><br>
+  <% kinds = ["hops", "yeast", "malt", "water"] %>
+  <% kinds.each do |kind| %>
+    <%= radio_button_tag(:kind, kind) %>
+    <%= label_tag(:kind, kind) %><br>
+  <% end %>
+  <%= f.submit %>
+<% end %>
