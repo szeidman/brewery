@@ -19,6 +19,15 @@ class IngredientsController < ApplicationController
   end
 
   def show
-    @ingredient = Ingredient.find(params[:id])
+    if @beer = Beer.find_by(id: params[:beer_id])
+      if @ingredient = @beer.ingredients.find_by(id: params[:id])
+        @ingredient
+      else
+        redirect_to beer_ingredients_path(@beer), alert: "Ingredient not found."
+      end
+    else
+      @ingredient = Ingredient.find(params[:id])
+    end
   end
+
 end

@@ -9,7 +9,4 @@
 
 <br>
 
-<h4><%= link_to "Made with:", beer_ingredients_path %></h4>
-<% @beer.ingredients.each do |ingredient| %>
-  <%= render partial: 'ingredients/ingredient', locals: {ingredient: ingredient} %>
-<% end %>
+<h4><%= link_to "See the Ingredients", beer_ingredients_path(@beer) %></h4>

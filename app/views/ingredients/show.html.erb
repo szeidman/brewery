@@ -1,4 +1,5 @@
-<h1><%= @ingredient.name -%> (<%= @ingredient.kind -%>)</h1>
+<h1><%= @ingredient.name -%></h1>
+<h3>(<%= @ingredient.kind -%>)</h3>
 <br>
 <%= render partial: 'attribute', locals: {title: "Origin:", value: @ingredient.origin} %>
 <br>
