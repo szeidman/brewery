@@ -1,6 +1,5 @@
 class IngredientsController < ApplicationController
   before_action :set_ingredient, only: [:edit, :update, :destroy]
-  helper_method :show_with_beer
 
   def index
     if params[:beer_id]
@@ -16,6 +15,7 @@ class IngredientsController < ApplicationController
   end
 
   def new
+    has_beer
     @ingredient = Ingredient.new
   end
 
@@ -30,6 +30,7 @@ class IngredientsController < ApplicationController
   end
 
   def edit
+    has_beer
   end
 
   def update
@@ -41,7 +42,7 @@ class IngredientsController < ApplicationController
   end
 
   def show
-    if @beer = Beer.find_by(id: params[:beer_id])
+    if has_beer
       if @ingredient = @beer.ingredients.find_by(id: params[:id])
         @ingredient
         @amount = @beer.beer_ingredients.find_by(ingredient_id: params[:id]).amount
@@ -61,6 +62,10 @@ class IngredientsController < ApplicationController
 
     def set_ingredient
       @ingredient = Ingredient.find(params[:id])
+    end
+
+    def has_beer
+      @beer = Beer.find_by(id: params[:beer_id])
     end
 
 end

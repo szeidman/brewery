@@ -1,2 +1,2 @@
-<h1> New Ingredient </h1>
+<h1> New Ingredient <%= "for #{@beer.name}" if @beer %>  </h1>
 <%= render 'form' %>

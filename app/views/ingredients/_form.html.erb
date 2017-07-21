@@ -9,17 +9,18 @@
 </div>
 <% end %>
 
-<%= form_for @ingredient do |f| %>
-  <br>
-  <%# if @beer
-    <% hidden_field for beer_id, add amount to form
+<% if !@beer %>
+  <%= form_for @ingredient do |f| %>
+    <br>
+    <%= f.label :name %>
+    <%= f.text_field :name %><br>
+    <%= f.label :origin %>
+    <%= f.text_field :origin %><br>
+    <label><strong>Kind </strong></label>
+    <%= f.select :kind, ingredient_kinds, selected: @ingredient.kind %>
+    <br>
+    <%= f.submit %>
   <% end %>
-  <%= f.label :name %>
-  <%= f.text_field :name %><br>
-  <%= f.label :origin %>
-  <%= f.text_field :origin %><br>
-  <label><strong>Ingredient type:</strong></label>
-  <%= f.select :kind, ingredient_types, selected: @ingredient.kind %>
-  <br>
-  <%= f.submit %>
+<% else %>
+  <%= render 'beers/ingredient_form' %>
 <% end %>

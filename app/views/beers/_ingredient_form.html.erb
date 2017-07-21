@@ -1,8 +1,13 @@
 <%= form_for @beer do |f| %>
-New Ingredient<br>
-Amount: <input name="beer[ingredient_attributes][][amount]">
-Name: <input name="beer[ingredient_attributes][][name]">
-Origin: <input name="beer[ingredient_attributes][][origin]">
-Kind: <input name="beer[ingredient_attributes][][kind]">
-<%= f.submit %>
+  Amount <input name="beer[ingredient_attributes][][amount]"><br>
+  Name <input name="beer[ingredient_attributes][][name]"><br>
+  Origin <input name="beer[ingredient_attributes][][origin]"><br>
+  Kind
+  <select name="beer[ingredient_attributes][][kind]">
+    <% ingredient_kinds.each do |kind| %>
+      <option value="<%= kind %>"><%= kind %></option>
+    <% end %>
+  </select>
+  <br>
+  <%= f.submit %>
 <% end %>

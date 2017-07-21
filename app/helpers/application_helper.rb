@@ -1,5 +1,5 @@
 module ApplicationHelper
-  def ingredient_types
+  def ingredient_kinds
     ["hops", "yeast", "malt", "water"]
   end
 
