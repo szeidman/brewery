@@ -12,12 +12,12 @@
 <% if !@beer %>
   <%= form_for @ingredient do |f| %>
     <br>
-    <%= f.label :name %>
+    <%= f.label :name, class: "col-sm-1" %>
     <%= f.text_field :name %><br>
-    <%= f.label :origin %>
+    <%= f.label :origin, class: "col-sm-1" %>
     <%= f.text_field :origin %><br>
-    <label><strong>Kind </strong></label>
-    <%= f.select :kind, ingredient_kinds, selected: @ingredient.kind %>
+    <label class="col-sm-1"><strong>Kind </strong></label>
+    <%= f.select :kind, ingredient_kinds, selected: @ingredient.kind, class: "col-sm-4" %>
     <br>
     <%= f.submit %>
   <% end %>
