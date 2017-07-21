@@ -10,7 +10,7 @@ class BeerIngredientsController < ApplicationController
 
   private
     def beer_ingredient_params
-      params.require(:beer_ingredient).permit(:beer_id, :amount, ingredient_attributes:[:id, :name, :kind, :origin])
+      params.require(:beer_ingredient).permit(:id, :beer_id, :ingredient_id, :amount)
     end
 
 end

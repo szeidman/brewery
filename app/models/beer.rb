@@ -32,7 +32,10 @@ class Beer < ApplicationRecord
   #  self.ingredients.collect {|ingredient| ingredient.name}
   #end
 
-  def beer_ingredients_attributes=()
+  def ingredient_attributes=(ingredient_attributes)
+    binding.pry
+    ing_name = ingredient_attributes.keys.select(:name)
+    ingredient = Ingredient.find_or_create_by(ing_name)
   end
 
   def find_ingredient(ingredient_id)

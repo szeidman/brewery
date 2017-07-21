@@ -13,4 +13,7 @@ class Ingredient < ApplicationRecord
   scope :yeast, -> { where(kind: 'yeast') }
   scope :hops, -> { where(kind: 'hops') }
   scope :water, -> { where(kind: 'water') }
+
+  def beer_ingredients=()
+  end
 end

@@ -7,14 +7,15 @@ class BeersController < ApplicationController
 
   def new
     @beer = Beer.new
-    @beer.beer_ingredients.build
-    @beer.beer_ingredients.each do |i|
-      i.build_ingredient
+    @beer.ingredients.build
+    @beer.ingredients.each do |i|
+      i.beer_ingredients.build
     end
   end
 
   def create
     @beer = Beer.new(beer_params)
+    binding.pry
     if @beer.save
       redirect_to @beer, notice: 'Beer created.'
     else
@@ -51,7 +52,7 @@ class BeersController < ApplicationController
     end
 
     def beer_params
-      params.require(:beer).permit(:name, :style, :abv, :ibu, :srm, :user_id, beer_ingredients_attributes: [:id, :amount, ingredient_attributes: [:id, :name, :kind, :origin]])
+      params.require(:beer).permit(:user_id, :name, :style, :abv, :ibu, :srm, ingredient_ids:[], ingredient_attributes: [:name, :origin, :kind, :amount])
     end
 
   end
