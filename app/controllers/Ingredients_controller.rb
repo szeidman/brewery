@@ -14,6 +14,22 @@ class IngredientsController < ApplicationController
      end
   end
 
+  def malt
+    @ingredients = Ingredient.malt
+  end
+
+  def yeast
+    @ingredients = Ingredient.yeast
+  end
+
+  def hops
+    @ingredients = Ingredient.hops
+  end
+
+  def water
+    @ingredients = Ingredient.water
+  end
+
   def new
     has_beer
     @ingredient = Ingredient.new

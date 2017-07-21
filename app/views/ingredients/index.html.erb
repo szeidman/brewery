@@ -1,7 +1,3 @@
 <h1>Ingredients</h1>
-<ul class="list-group">
-  <%= render @ingredients %>
-</ul>
-
-
+<%= render 'indices' %>
 <%= button_to "Add an Ingredient", @beer ? new_beer_ingredient_path : new_ingredient_path, method: :get %>
