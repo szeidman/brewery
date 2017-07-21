@@ -25,7 +25,7 @@
   <%# Refactor the partial so this can go away; counterpoint: one ingredient of each type displays.%>
   <h4>Ingredients:</h4>
   <select name="beer[ingredient_attributes][][name]">
-    <% Ingredient.hops.each do |ingredient| %>
+    <% Ingredient.all.each do |ingredient| %>
       <option value="<%= ingredient.name %>"><%= ingredient.name %></option>
     <% end %>
   </select>

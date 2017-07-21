@@ -33,9 +33,20 @@ class Beer < ApplicationRecord
   #end
 
   def ingredient_attributes=(ingredient_attributes)
-    binding.pry
-    ing_name = ingredient_attributes.keys.select(:name)
-    ingredient = Ingredient.find_or_create_by(ing_name)
+    ingredient_attributes.each do |ingredient_attribute|
+      ingredient = Ingredient.find_by(name: ingredient_attribute[:name])
+        if ingredient
+          if self.beer_ingredients.find_by(ingredient_id: ingredient.id)
+            self.beer_ingredients.update(amount: ingredient_attribute[:amount])
+          else
+            self.beer_ingredients.build(ingredient_id: ingredient.id, amount: ingredient_attribute[:amount])
+          end
+        else
+          ingredient = Ingredient.new(name: ingredient_attribute[:name], origin: ingredient_attribute[:origin], kind: ingredient_attribute[:kind])
+          if ingredient.save
+            self.beer_ingredients.build(ingredient_id: ingredient.id, amount: ingredient_attribute[:amount])
+        end
+    end
   end
 
   def find_ingredient(ingredient_id)
