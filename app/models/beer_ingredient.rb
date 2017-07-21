@@ -4,9 +4,4 @@ class BeerIngredient < ApplicationRecord
 
   validates_numericality_of :amount
 
-  def ingredient_attributes=()
-  end
-
-
-
 end

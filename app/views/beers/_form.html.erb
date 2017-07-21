@@ -22,24 +22,15 @@
   <%= f.number_field :ibu %><br>
   <%= f.label :srm %>
   <%= f.number_field :srm %><br>
-  Ingredients<br>
-  Amount: <input name="beer[ingredient_attributes][][amount]">
-  Name: <name="beer[ingredient_attributes][][name]">
-  Origin: <input name="beer[ingredient_attributes][][origin]">
-  Kind: <input name="beer[ingredient_attributes][][kind]">
-  <%#<div class="field">
-    <%= f.number_field :srm, class: 'text_field', step: 0.1 %><br>
-        <%#= f.fields_for :ingredients do |i| %>
-          <%#= i.label :amount %>
-          <%#= i.number_field :amount %>
-          <%#= i.label :name %><br>
-          <%#= i.text_field :name %><br>
-          <%#= i.label :origin %>
-          <%#= i.text_field :origin %><br>
-          <%#= i.label :kind %>
-          <%#= i.text_field :kind %><br>
-          <%#= f.collection_check_boxes :ingredient_ids, Ingredient.all, :id, :name %><br>
-      <%# end %>
-  <%#/div>%>
+  <%# Refactor the partial so this can go away; counterpoint: one ingredient of each type displays.%>
+  <h4>Ingredients:</h4>
+  <select name="beer[ingredient_attributes][][name]">
+    <% Ingredient.hops.each do |ingredient| %>
+      <option value="<%= ingredient.name %>"><%= ingredient.name %></option>
+    <% end %>
+  </select>
+  Amount <input name="beer[ingredient_attributes][][amount]"><br>
+  <br>
+
   <%= f.submit %>
 <% end %>
