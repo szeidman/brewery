@@ -1,0 +1,8 @@
+<%= form_for @beer do |f| %>
+New Ingredient<br>
+Amount: <input name="beer[ingredient_attributes][][amount]">
+Name: <input name="beer[ingredient_attributes][][name]">
+Origin: <input name="beer[ingredient_attributes][][origin]">
+Kind: <input name="beer[ingredient_attributes][][kind]">
+<%= f.submit %>
+<% end %>

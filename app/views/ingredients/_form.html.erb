@@ -19,10 +19,7 @@
   <%= f.label :origin %>
   <%= f.text_field :origin %><br>
   <label><strong>Ingredient type:</strong></label>
-  <%["hops", "yeast", "malt", "water"].each do |kind|%>
-    <%= f.radio_button :kind, kind %>
-    <%= f.label :kind, kind %>
-  <% end %>
+  <%= f.select :kind, ingredient_types, selected: @ingredient.kind %>
   <br>
   <%= f.submit %>
 <% end %>
