@@ -15,12 +15,10 @@ class BeersController < ApplicationController
 
   def create
     @beer = Beer.new(beer_params)
-    binding.pry
     if @beer.save
       redirect_to @beer, notice: 'Beer created.'
     else
       render :new
-      # errors alert
     end
   end
 
@@ -39,10 +37,6 @@ class BeersController < ApplicationController
   end
 
   def show
-  end
-
-  def recipe
-    @beer = Beer.find(params[:id])
   end
 
   private

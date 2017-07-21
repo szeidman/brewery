@@ -45,6 +45,7 @@ class Beer < ApplicationRecord
           ingredient = Ingredient.new(name: ingredient_attribute[:name], origin: ingredient_attribute[:origin], kind: ingredient_attribute[:kind])
           if ingredient.save
             self.beer_ingredients.build(ingredient_id: ingredient.id, amount: ingredient_attribute[:amount])
+          end #TODO: how to raise the error
         end
     end
   end
