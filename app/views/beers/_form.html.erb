@@ -8,28 +8,32 @@
   </ul>
 </div>
 <% end %>
-
 <%= form_for @beer do |f| %>
-  <br>
   <%= f.hidden_field :user_id, value: @beer.user_id ||= current_user.id %>
-  <%= f.label :name %>
+  <%= f.label :name, class: "col-sm-1" %>
   <%= f.text_field :name %><br>
-  <%= f.label :style %>
+  <%= f.label :style, class: "col-sm-1" %>
   <%= f.text_field :style %><br>
-  <%= f.label :abv %>
+  <%= f.label :abv, class: "col-sm-1" %>
   <%= f.number_field :abv, class: 'text_field', step: 0.1 %><br>
-  <%= f.label :ibu %>
+  <%= f.label :ibu, class: "col-sm-1" %>
   <%= f.number_field :ibu %><br>
-  <%= f.label :srm %>
+  <%= f.label :srm, class: "col-sm-1" %>
   <%= f.number_field :srm %><br>
   <%# Refactor the partial so this can go away; counterpoint: one ingredient of each type displays.%>
   <h4>Ingredients:</h4>
-  <select name="beer[ingredient_attributes][][name]">
-    <% Ingredient.all.each do |ingredient| %>
-      <option value="<%= ingredient.name %>"><%= ingredient.name %></option>
-    <% end %>
-  </select>
-  Amount <input name="beer[ingredient_attributes][][amount]"><br>
+  <% ingredient_kinds.each do |ingredient_kind| %>
+    <div class="form-inline">
+    <label class="col-sm-1"><%=ingredient_kind.capitalize%>:</label>
+    <select name="beer[ingredient_attributes][][name]" class="col-sm-3">
+      <% Ingredient.send(ingredient_kind).each do |ingredient| %>
+        <option value="<%= ingredient.name %>"><%= ingredient.name %></option>
+      <% end %>
+    </select>
+    Amount: <input type="number" name="beer[ingredient_attributes][][amount]"><br>
+    </div>
+  <% end %>
+  <br>
   <br>
 
   <%= f.submit %>
