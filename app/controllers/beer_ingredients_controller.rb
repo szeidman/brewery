@@ -8,6 +8,9 @@ class BeerIngredientsController < ApplicationController
     @beer_ingredient = BeerIngredient.new(beer_ingredient_params)
   end
 
+  def destroy
+  end
+
   private
     def beer_ingredient_params
       params.require(:beer_ingredient).permit(:beer_id, :ingredient_id, :amount)

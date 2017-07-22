@@ -7,10 +7,10 @@ class BeersController < ApplicationController
 
   def new
     @beer = Beer.new
+    #4.times do
     @beer.ingredients.build
-    @beer.ingredients.each do |i|
-      i.beer_ingredients.build
-    end
+    #end
+    #Have the new ingredient take the place of the previous one.
   end
 
   def create

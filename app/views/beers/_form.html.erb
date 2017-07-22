@@ -20,21 +20,22 @@
   <%= f.number_field :ibu %><br>
   <%= f.label :srm, class: "col-sm-1" %>
   <%= f.number_field :srm %><br>
-  <%# Refactor the partial so this can go away; counterpoint: one ingredient of each type displays.%>
+  <%# TODO Refactor the partial so this can go away; counterpoint: one ingredient of each type displays.%>
   <h4>Ingredients:</h4>
   <% ingredient_kinds.each do |ingredient_kind| %>
     <div class="form-inline">
     <label class="col-sm-1"><%=ingredient_kind.capitalize%>:</label>
+    <%# TODO change this so that there are four ingredient slots (through controller!) Then edit will be less painful%>
     <select name="beer[ingredient_attributes][][name]" class="col-sm-3">
       <% Ingredient.send(ingredient_kind).each do |ingredient| %>
         <option value="<%= ingredient.name %>"><%= ingredient.name %></option>
       <% end %>
     </select>
+    <% binding.pry %>
     Amount: <input type="number" name="beer[ingredient_attributes][][amount]"><br>
     </div>
   <% end %>
   <br>
   <br>
-
   <%= f.submit %>
 <% end %>

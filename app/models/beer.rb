@@ -13,24 +13,6 @@ class Beer < ApplicationRecord
   #validate that all types of ingredients included
 
   scope :darkest, -> { where(kind: 'water') }
-  #maximum("srm")
-
-  #def beer_ingredient_attributes=(beer_ingredient_attributes)
-  #  ingredient = Ingredient.find_or_create_by(name: attributes.name)
-  #  IngredientAttribute.create(beer_id: self.id, ingredient_id: ingredient.id, amount: attributes.amount)
-  #  self.beer_ingredients.build << ingredient
-  #end
-
-  #def ingredient_attributes=(attributes)
-
-  #def add_ingredient(ingredient_id)
-  #  beer_ingredient = self.beer_ingredient.find_by(ingredient_id: ingredient_id)
-  #    if beer_ingredient
-  #      beer_ingredient.update(params:[])
-  #  if beer_ingredient
-  #def ingredient_attributes
-  #  self.ingredients.collect {|ingredient| ingredient.name}
-  #end
 
   def ingredient_attributes=(ingredient_attributes)
     ingredient_attributes.each do |ingredient_attribute|
@@ -44,7 +26,15 @@ class Beer < ApplicationRecord
         else
           ingredient = Ingredient.new(name: ingredient_attribute[:name], origin: ingredient_attribute[:origin], kind: ingredient_attribute[:kind])
           if ingredient.save
-            self.beer_ingredients.build(ingredient_id: ingredient.id, amount: ingredient_attribute[:amount])
+            new_beer_ingredient = self.beer_ingredients.build(ingredient_id: ingredient.id, amount: ingredient_attribute[:amount])
+            old_ingredient = self.ingredients.find_by(kind: ingredient_attribute[:kind])
+            if old_ingredient
+              old_beer_ingredient = self.beer_ingredients.find_by(ingredient_id: old_ingredient.id)
+              old_beer_ingredient.destroy
+              new_beer_ingredient.save
+            else
+              new_beer_ingredient.save
+            end
           end #TODO: how to raise the error
         end
     end
