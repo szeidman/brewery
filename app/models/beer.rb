@@ -10,7 +10,10 @@ class Beer < ApplicationRecord
   validates_numericality_of :ibu
   validates_numericality_of :srm
 
-  #validate that all types of ingredients included
+
+
+  #validate that all types of ingredients included: does that but need to customize
+  #@messages={:beer_ingredients=>["is invalid"]}, @details={:beer_ingredients=>[{:error=>:invalid}, {:error=>:invalid}, {:error=>:invalid}, {:error=>:invalid}]}>
 
   scope :darkest, -> { where(kind: 'water') }
 
@@ -42,6 +45,12 @@ class Beer < ApplicationRecord
 
   def find_ingredient(ingredient_id)
     self.beer_ingredients.find_by(ingredient_id: ingredient_id)
+  end
+
+  def find_beer_ingredient_amount(kind)
+    ingredient = self.ingredients.find_by(kind: kind)
+    beer_ingredient = self.find_ingredient(ingredient.id)
+    beer_ingredient.amount
   end
 
   def color
