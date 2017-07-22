@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 20170719161648) do
   create_table "beer_ingredients", force: :cascade do |t|
     t.integer "beer_id"
     t.integer "ingredient_id"
-    t.integer "amount"
+    t.float "amount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 20170719161648) do
     t.integer "user_id"
     t.string "style"
     t.float "abv"
-    t.float "ibu"
+    t.integer "ibu"
     t.float "srm"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -59,7 +59,7 @@ ActiveRecord::Schema.define(version: 20170719161648) do
     t.string "uid"
     t.string "name"
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["name"], name: "index_users_on_name"
+    t.index ["name"], name: "index_users_ on_name"
     t.index ["provider"], name: "index_users_on_provider"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["uid"], name: "index_users_on_uid"

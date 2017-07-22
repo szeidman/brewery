@@ -5,7 +5,7 @@ class CreateBeers < ActiveRecord::Migration[5.1]
       t.integer :user_id
       t.string :style
       t.float :abv
-      t.float :ibu
+      t.integer :ibu
       t.float :srm
 
       t.timestamps

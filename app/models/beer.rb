@@ -50,8 +50,10 @@ class Beer < ApplicationRecord
 
   def find_beer_ingredient_amount(kind)
     ingredient = self.ingredients.find_by(kind: kind)
-    beer_ingredient = self.find_beer_ingredient(ingredient.id)
-    beer_ingredient.amount
+    if ingredient
+      beer_ingredient = self.find_beer_ingredient(ingredient.id)
+      beer_ingredient.amount
+    end
   end
 
   def color
