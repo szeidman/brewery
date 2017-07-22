@@ -8,7 +8,6 @@
   </ul>
 </div>
 <% end %>
-
 <%= form_for @beer do |f| %>
   <%= f.hidden_field :user_id, value: @beer.user_id ||= current_user.id %>
   <%= f.label :name, class: "col-sm-1" %>
@@ -16,11 +15,11 @@
   <%= f.label :style, class: "col-sm-1" %>
   <%= f.text_field :style %><br>
   <%= f.label :abv, class: "col-sm-1" %>
-  <%= f.number_field :abv, class: 'text_field', step: 0.1 %><br>
+  <%= f.number_field :abv, class: 'text_field', step: 0.1, min: "0", max: "20" %><br>
   <%= f.label :ibu, class: "col-sm-1" %>
-  <%= f.number_field :ibu %><br>
+  <%= f.number_field :ibu, min: "0", max: "150" %><br>
   <%= f.label :srm, class: "col-sm-1" %>
-  <%= f.number_field :srm %><br>
+  <%= f.number_field :srm, class: 'text_field', step: 0.1, min: "1.0", max: "20.0" %><br>
   <h4>Ingredients:</h4>
   <% ingredient_kinds.each do |ingredient_kind| %>
     <div class="form-inline">

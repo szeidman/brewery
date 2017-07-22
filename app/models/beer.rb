@@ -21,8 +21,9 @@ class Beer < ApplicationRecord
     ingredient_attributes.each do |ingredient_attribute|
       ingredient = Ingredient.find_by(name: ingredient_attribute[:name])
         if ingredient
-          if self.beer_ingredients.find_by(ingredient_id: ingredient.id)
-            self.beer_ingredients.update(amount: ingredient_attribute[:amount])
+          if self.find_beer_ingredient(ingredient.id)
+            beer_ingredient = self.find_beer_ingredient(ingredient.id)
+            beer_ingredient.update(amount: ingredient_attribute[:amount])
           else
             self.beer_ingredients.build(ingredient_id: ingredient.id, amount: ingredient_attribute[:amount])
           end
@@ -43,13 +44,13 @@ class Beer < ApplicationRecord
     end
   end
 
-  def find_ingredient(ingredient_id)
+  def find_beer_ingredient(ingredient_id)
     self.beer_ingredients.find_by(ingredient_id: ingredient_id)
   end
 
   def find_beer_ingredient_amount(kind)
     ingredient = self.ingredients.find_by(kind: kind)
-    beer_ingredient = self.find_ingredient(ingredient.id)
+    beer_ingredient = self.find_beer_ingredient(ingredient.id)
     beer_ingredient.amount
   end
 
