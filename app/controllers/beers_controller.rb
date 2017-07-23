@@ -7,7 +7,10 @@ class BeersController < ApplicationController
 
   def new
     @beer = Beer.new
-    4.times {@beer.ingredients.build}
+    @hops = @beer.ingredients.build(kind: "hops")
+    @yeast = @beer.ingredients.build(kind: "yeast")
+    @malt = @beer.ingredients.build(kind: "malt")
+    @water = @beer.ingredients.build(kind: "water")
     @beer.ingredients.each do |i|
       i.beer_ingredients.build
     end
@@ -15,6 +18,7 @@ class BeersController < ApplicationController
 
   def create
     @beer = Beer.new(beer_params)
+
     if @beer.save
       redirect_to @beer, notice: 'Beer created.'
     else
