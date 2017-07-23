@@ -1,7 +1,7 @@
 class BeerIngredient < ApplicationRecord
-  belongs_to :beer, optional: true
-  belongs_to :ingredient, optional: true
+  belongs_to :beer
+  belongs_to :ingredient
 
-  validates_numericality_of :amount
+  validates_numericality_of :amount, greater_than_or_equal_to: 0
 
 end

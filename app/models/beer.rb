@@ -6,24 +6,32 @@ class Beer < ApplicationRecord
   validates_presence_of :name
   validates_uniqueness_of :name
   validates_presence_of :style
-  validates_numericality_of :abv
-  validates_numericality_of :ibu
-  validates_numericality_of :srm
-
-
+  validates_numericality_of :abv, greater_than_or_equal_to: 0, less_than: 15
+  validates_numericality_of :ibu, only_integer: true, greater_than_or_equal_to: 0, less_than: 150
+  validates_numericality_of :srm, greater_than_or_equal_to: 1.0, less_than: 20.1
+  validates_associated :ingredients
+  validates_associated :beer_ingredients
 
   #validate that all types of ingredients included: does that but need to customize
   #@messages={:beer_ingredients=>["is invalid"]}, @details={:beer_ingredients=>[{:error=>:invalid}, {:error=>:invalid}, {:error=>:invalid}, {:error=>:invalid}]}>
 
-  scope :darkest, -> { where(kind: 'water') }
+  def positive_amount
+    self.errors.add(:amount)
+  end
+
+  def ingredient_error
+    errors.add(:ingredient, :kind)
+    end
+  end
 
   def ingredient_attributes=(ingredient_attributes)
     ingredient_attributes.each do |ingredient_attribute|
-      ingredient = Ingredient.find_by(name: ingredient_attribute[:name])
+      if ingredient_attribute[:amount].to_i >= 0
+        ingredient = Ingredient.find_by(name: ingredient_attribute[:name])
         if ingredient
           if self.find_beer_ingredient(ingredient.id)
-            beer_ingredient = self.find_beer_ingredient(ingredient.id)
-            beer_ingredient.update(amount: ingredient_attribute[:amount])
+            @beer_ingredient = self.find_beer_ingredient(ingredient.id)
+            if @beer_ingredient.update(amount: ingredient_attribute[:amount])
           else
             self.beer_ingredients.build(ingredient_id: ingredient.id, amount: ingredient_attribute[:amount])
           end
@@ -39,8 +47,13 @@ class Beer < ApplicationRecord
             else
               new_beer_ingredient.save
             end
-          end #TODO: how to raise the error
+          else
+            ingredient_errors(ingredient)
+          end
         end
+      else
+        positive_amount
+      end
     end
   end
 
