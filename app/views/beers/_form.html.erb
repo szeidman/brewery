@@ -23,9 +23,13 @@
   <h4>Ingredients:</h4>
   <% ingredient_kinds.each do |ingredient_kind| %>
       <label for="ingredient_name" class="col-sm-1" id><%=ingredient_kind.capitalize%>:</label>
-      <select id="ingredient_name" name="beer[ingredient_attributes][][name]" class="col-sm-3" id= >
+      <select id="ingredient_name" name="beer[ingredient_attributes][][name]" class="col-sm-3">
         <% Ingredient.send(ingredient_kind).each do |ingredient| %>
-          <option value="<%= ingredient.name %>"><%= ingredient.name %></option>
+          <% if @beer.ingredients.find_by(name: ingredient.name) %>
+            <option selected="selected" value="<%= ingredient.name %>"><%= ingredient.name %></option>
+          <% else %>
+            <option value="<%= ingredient.name %>"><%= ingredient.name %></option>
+          <% end %>
         <% end %>
       </select>
       <label for="amount" class="col-sm-2">Amount:</label>

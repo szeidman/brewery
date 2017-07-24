@@ -24,20 +24,38 @@ class Beer < ApplicationRecord
           beer_ingredient.update(amount: ingredient_attribute[:amount])
         else
           new_beer_ingredient = self.beer_ingredients.build(ingredient_id: ingredient.id, amount: ingredient_attribute[:amount])
-          new_beer_ingredient.save
-        end
-      else
-        ingredient = self.ingredients.build(name: ingredient_attribute[:name], origin: ingredient_attribute[:origin], kind: ingredient_attribute[:kind])
-        if ingredient.save
-          new_beer_ingredient = self.beer_ingredients.build(ingredient_id: ingredient.id, amount: ingredient_attribute[:amount])
           old_ingredient = self.ingredients.find_by(kind: ingredient_attribute[:kind])
           if old_ingredient
             old_beer_ingredient = self.beer_ingredients.find_by(ingredient_id: old_ingredient.id)
             old_beer_ingredient.delete
             new_beer_ingredient.save
+            self.save
           else
             new_beer_ingredient.save
+            self.save
           end
+        end
+      else
+        if ingredient_attribute[:amount].to_i >= 0
+          ingredient = self.ingredients.build(name: ingredient_attribute[:name], origin: ingredient_attribute[:origin], kind: ingredient_attribute[:kind])
+          if ingredient.valid?
+            old_ingredient = self.ingredients.find_by(kind: ingredient_attribute[:kind])
+            if old_ingredient
+              old_beer_ingredient = self.beer_ingredients.find_by(ingredient_id: old_ingredient.id)
+              old_beer_ingredient.delete
+              ingredient.save
+              new_beer_ingredient = self.beer_ingredients.build(ingredient_id: ingredient.id, amount: ingredient_attribute[:amount])
+              new_beer_ingredient.save
+              self.save
+            else
+              ingredient.save
+              new_beer_ingredient = self.beer_ingredients.build(ingredient_id: ingredient.id, amount: ingredient_attribute[:amount])
+              new_beer_ingredient.save
+              self.save
+            end
+          end
+        else
+          self.errors.add(:ingredient_attributes, "amount must be a number greater than zero")
         end
       end
     end
