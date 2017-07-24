@@ -11,9 +11,8 @@ class Beer < ApplicationRecord
   validates_numericality_of :ibu, only_integer: true, greater_than_or_equal_to: 0, less_than: 150
   validates_numericality_of :srm, greater_than_or_equal_to: 1.0, less_than: 20.1
 
-
-  def amount_error
-
+  def amount_validate
+    errors.add(:ingredient_attributes, "amount")
   end
 
   def ingredient_attributes=(ingredient_attributes)
@@ -34,7 +33,7 @@ class Beer < ApplicationRecord
           old_ingredient = self.ingredients.find_by(kind: ingredient_attribute[:kind])
           if old_ingredient
             old_beer_ingredient = self.beer_ingredients.find_by(ingredient_id: old_ingredient.id)
-            old_beer_ingredient.destroy
+            old_beer_ingredient.delete
             new_beer_ingredient.save
           else
             new_beer_ingredient.save
