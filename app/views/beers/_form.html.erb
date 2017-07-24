@@ -22,17 +22,16 @@
   <%= f.number_field :srm, class: 'text_field', step: 0.1, min: "1.0", max: "20.0" %><br>
   <h4>Ingredients:</h4>
   <% ingredient_kinds.each do |ingredient_kind| %>
-    <div class="form-inline">
-    <label class="col-sm-1" id><%=ingredient_kind.capitalize%>:</label>
-    <select name="beer[ingredient_attributes][][name]" class="col-sm-3" id= >
-      <% Ingredient.send(ingredient_kind).each do |ingredient| %>
-        <option value="<%= ingredient.name %>"><%= ingredient.name %></option>
-      <% end %>
-    </select>
-    <label class="col-sm-2">Amount:</label>
-    <input type="number" step="0.1" min="0" name="beer[ingredient_attributes][][amount]" value="<%= @beer.find_beer_ingredient_amount(ingredient_kind)%>">
-    <label>(kg)</label>
-    <br>
+      <label for="ingredient_name" class="col-sm-1" id><%=ingredient_kind.capitalize%>:</label>
+      <select id="ingredient_name" name="beer[ingredient_attributes][][name]" class="col-sm-3" id= >
+        <% Ingredient.send(ingredient_kind).each do |ingredient| %>
+          <option value="<%= ingredient.name %>"><%= ingredient.name %></option>
+        <% end %>
+      </select>
+      <label for="amount" class="col-sm-2">Amount:</label>
+      <input id="amount" type="number" step="0.1" min="0" name="beer[ingredient_attributes][][amount]" value="<%= beer_ingredient_amount(ingredient_kind)%>">
+      <label>(kg)</label>
+      <br>
     </div>
   <% end %>
   <br>

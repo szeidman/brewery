@@ -41,7 +41,6 @@ class IngredientsController < ApplicationController
       redirect_to @ingredient
     else
       render :new
-      # errors alert
     end
   end
 

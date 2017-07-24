@@ -2,6 +2,7 @@ class Beer < ApplicationRecord
   belongs_to :user
   has_many :beer_ingredients
   has_many :ingredients, through: :beer_ingredients
+  accepts_nested_attributes_for :ingredients, :beer_ingredients
 
   validates_presence_of :name
   validates_uniqueness_of :name
@@ -9,10 +10,11 @@ class Beer < ApplicationRecord
   validates_numericality_of :abv, greater_than_or_equal_to: 0, less_than: 15
   validates_numericality_of :ibu, only_integer: true, greater_than_or_equal_to: 0, less_than: 150
   validates_numericality_of :srm, greater_than_or_equal_to: 1.0, less_than: 20.1
-
   #validate that all types of ingredients included: does that but need to customize
   #@messages={:beer_ingredients=>["is invalid"]}, @details={:beer_ingredients=>[{:error=>:invalid}, {:error=>:invalid}, {:error=>:invalid}, {:error=>:invalid}]}>
+  def amount_error
 
+  end
 
   def ingredient_attributes=(ingredient_attributes)
     ingredient_attributes.each do |ingredient_attribute|
@@ -22,10 +24,11 @@ class Beer < ApplicationRecord
           beer_ingredient = self.find_beer_ingredient(ingredient.id)
           beer_ingredient.update(amount: ingredient_attribute[:amount])
         else
-          self.beer_ingredients.build(ingredient_id: ingredient.id, amount: ingredient_attribute[:amount])
+          new_beer_ingredient = self.beer_ingredients.build(ingredient_id: ingredient.id, amount: ingredient_attribute[:amount])
+          new_beer_ingredient.save
         end
       else
-        ingredient = Ingredient.new(name: ingredient_attribute[:name], origin: ingredient_attribute[:origin], kind: ingredient_attribute[:kind])
+        ingredient = self.ingredients.build(name: ingredient_attribute[:name], origin: ingredient_attribute[:origin], kind: ingredient_attribute[:kind])
         if ingredient.save
           new_beer_ingredient = self.beer_ingredients.build(ingredient_id: ingredient.id, amount: ingredient_attribute[:amount])
           old_ingredient = self.ingredients.find_by(kind: ingredient_attribute[:kind])
