@@ -69,6 +69,15 @@ class IngredientsController < ApplicationController
     end
   end
 
+  def destroy
+    if @ingredient.beers.any?
+      redirect_to @ingredient, notice: 'This ingredient cannot be deleted because other beers have it!'
+    else
+      @ingredient.destroy
+      redirect_to ingredients_path, notice: 'Ingredient was successfully deleted.'
+    end
+  end
+
   private
 
     def ingredient_params

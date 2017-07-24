@@ -16,4 +16,5 @@ class Ingredient < ApplicationRecord
 
   def beer_ingredients=()
   end
+
 end
