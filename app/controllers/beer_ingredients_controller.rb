@@ -9,6 +9,7 @@ class BeerIngredientsController < ApplicationController
   end
 
   def destroy
+    @beer_ingredient = BeerIngredient.find(params[:id])
   end
 
   private

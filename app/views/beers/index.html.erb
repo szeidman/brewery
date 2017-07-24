@@ -3,4 +3,4 @@
 <%= render @beers %>
 </ul>
 
-<%= button_to "Add a Beer", new_beer_path, method: :get %>
+<%= button_to "Add a Beer", new_beer_path, method: :get if current_user %>
