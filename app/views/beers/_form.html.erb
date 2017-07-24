@@ -22,6 +22,7 @@
   <%= f.number_field :srm, class: 'text_field', step: 0.1, min: "1.0", max: "20.0" %><br>
   <h4>Ingredients:</h4>
   <% ingredient_kinds.each do |ingredient_kind| %>
+      <input type="hidden" name="beer[ingredient_attributes][][kind]" value="<%ingredient_kind%>">
       <label for="ingredient_name" class="col-sm-1" id><%=ingredient_kind.capitalize%>:</label>
       <select id="ingredient_name" name="beer[ingredient_attributes][][name]" class="col-sm-3">
         <% Ingredient.send(ingredient_kind).each do |ingredient| %>

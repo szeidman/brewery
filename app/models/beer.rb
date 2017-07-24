@@ -2,7 +2,8 @@ class Beer < ApplicationRecord
   belongs_to :user
   has_many :beer_ingredients
   has_many :ingredients, through: :beer_ingredients
-  accepts_nested_attributes_for :ingredients, :beer_ingredients
+  accepts_nested_attributes_for :ingredients
+  accepts_nested_attributes_for :beer_ingredients, allow_destroy: true
 
   validates_presence_of :name
   validates_uniqueness_of :name
@@ -19,20 +20,17 @@ class Beer < ApplicationRecord
     ingredient_attributes.each do |ingredient_attribute|
       ingredient = Ingredient.find_by(name: ingredient_attribute[:name])
       if ingredient
-        if self.find_beer_ingredient(ingredient.id)
+        if self.beer_ingredients.find_by(ingredient_id: ingredient.id)
           beer_ingredient = self.find_beer_ingredient(ingredient.id)
           beer_ingredient.update(amount: ingredient_attribute[:amount])
         else
-          new_beer_ingredient = self.beer_ingredients.build(ingredient_id: ingredient.id, amount: ingredient_attribute[:amount])
-          old_ingredient = self.ingredients.find_by(kind: ingredient_attribute[:kind])
+          old_ingredient = self.ingredients.find_by(kind: ingredient.kind)
           if old_ingredient
             old_beer_ingredient = self.beer_ingredients.find_by(ingredient_id: old_ingredient.id)
-            old_beer_ingredient.delete
-            new_beer_ingredient.save
-            self.save
+            old_beer_ingredient.update(ingredient_id: ingredient.id, amount: ingredient_attribute[:amount])
           else
+            new_beer_ingredient = self.beer_ingredients.build(ingredient_id: ingredient.id, amount: ingredient_attribute[:amount])
             new_beer_ingredient.save
-            self.save
           end
         end
       else
