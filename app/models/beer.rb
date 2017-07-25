@@ -3,7 +3,7 @@ class Beer < ApplicationRecord
   has_many :beer_ingredients
   has_many :ingredients, through: :beer_ingredients
   accepts_nested_attributes_for :ingredients
-  accepts_nested_attributes_for :beer_ingredients, allow_destroy: true
+  accepts_nested_attributes_for :beer_ingredients
 
   validates_presence_of :name
   validates_uniqueness_of :name
@@ -11,6 +11,7 @@ class Beer < ApplicationRecord
   validates_numericality_of :abv, greater_than_or_equal_to: 0, less_than: 15
   validates_numericality_of :ibu, only_integer: true, greater_than_or_equal_to: 0, less_than: 150
   validates_numericality_of :srm, greater_than_or_equal_to: 1.0, less_than: 20.1
+  validates_associated :beer_ingredients
 
   def amount_validate
     errors.add(:ingredient_attributes, "amount")
@@ -29,38 +30,26 @@ class Beer < ApplicationRecord
             old_beer_ingredient = self.beer_ingredients.find_by(ingredient_id: old_ingredient.id)
             old_beer_ingredient.update(ingredient_id: ingredient.id, amount: ingredient_attribute[:amount])
           else
-            new_beer_ingredient = self.beer_ingredients.build(ingredient_id: ingredient.id, amount: ingredient_attribute[:amount])
-            new_beer_ingredient.save
+            self.beer_ingredients.create(ingredient_id: ingredient.id, amount: ingredient_attribute[:amount])
           end
         end
       else
-        if ingredient_attribute[:amount].to_i >= 0
-          ingredient = self.ingredients.build(name: ingredient_attribute[:name], origin: ingredient_attribute[:origin], kind: ingredient_attribute[:kind])
-          if ingredient.valid?
-            old_ingredient = self.ingredients.find_by(kind: ingredient_attribute[:kind])
-            if old_ingredient
-              old_beer_ingredient = self.beer_ingredients.find_by(ingredient_id: old_ingredient.id)
-              old_beer_ingredient.delete
-              ingredient.save
-              new_beer_ingredient = self.beer_ingredients.build(ingredient_id: ingredient.id, amount: ingredient_attribute[:amount])
-              new_beer_ingredient.save
-              self.save
-            else
-              ingredient.save
-              new_beer_ingredient = self.beer_ingredients.build(ingredient_id: ingredient.id, amount: ingredient_attribute[:amount])
-              new_beer_ingredient.save
-              self.save
-            end
+        ingredient = self.ingredients.build(name: ingredient_attribute[:name], origin: ingredient_attribute[:origin], kind: ingredient_attribute[:kind])
+        if ingredient.valid?
+          old_ingredient = self.ingredients.find_by(kind: ingredient_attribute[:kind])
+          if old_ingredient
+            old_beer_ingredient = self.beer_ingredients.find_by(ingredient_id: old_ingredient.id)
+            old_beer_ingredient.delete
+            save_ingredient_create_beer_ingredient(ingredient, ingredient_attribute)
+          else
+            save_ingredient_create_beer_ingredient(ingredient, ingredient_attribute)
           end
-        else
-          self.errors.add(:ingredient_attributes, "amount must be a number greater than zero")
         end
       end
     end
   end
 
   def ingredient_attributes
-
   end
 
   def find_beer_ingredient(ingredient_id)
@@ -83,6 +72,10 @@ class Beer < ApplicationRecord
     end
   end
 
+  def save_ingredient_create_beer_ingredient(ingredient, ingredient_attribute)
+    ingredient.save
+    self.beer_ingredients.create(ingredient_id: ingredient.id, amount: ingredient_attribute[:amount])
+  end
 
   def color
     if self.srm < 3.0
