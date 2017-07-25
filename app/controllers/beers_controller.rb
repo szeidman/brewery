@@ -7,6 +7,13 @@ class BeersController < ApplicationController
 
   def new
     @beer = Beer.new
+    #["hops", "yeast", "malt", "water"].each do |ingredient_kind|
+    #  @beer.ingredients.build(kind: ingredient_kind)
+    #end
+    @malt = @beer.ingredients.build(kind: "malt")
+    @beer.ingredients.each do |i|
+      i.beer_ingredients.build
+    end
   end
 
   def create
