@@ -23,20 +23,24 @@
   <h4>Ingredients:</h4>
   <% ingredient_kinds.each do |ingredient_kind| %>
       <input type="hidden" name="beer[ingredient_attributes][][kind]" value="<%ingredient_kind%>">
-      <label for="ingredient_name" class="col-sm-1" id><%=ingredient_kind.capitalize%>:</label>
-      <select id="ingredient_name" name="beer[ingredient_attributes][][name]" class="col-sm-3">
-        <% Ingredient.send(ingredient_kind).each do |ingredient| %>
-          <% if @beer.ingredients.find_by(name: ingredient.name) %>
-            <option selected="selected" value="<%= ingredient.name %>"><%= ingredient.name %></option>
-          <% else %>
-            <option value="<%= ingredient.name %>"><%= ingredient.name %></option>
+      <div class="form-group">
+        <label for="ingredient_name" class="col-sm-1"><%=ingredient_kind.capitalize%>:</label>
+        <select id="ingredient_name" name="beer[ingredient_attributes][][name]" class="col-sm-2">
+          <% Ingredient.send(ingredient_kind).each do |ingredient| %>
+            <% if @beer.ingredients.find_by(name: ingredient.name) %>
+              <option selected="selected" value="<%= ingredient.name %>"><%= ingredient.name %></option>
+            <% else %>
+              <option value="<%= ingredient.name %>"><%= ingredient.name %></option>
+            <% end %>
           <% end %>
-        <% end %>
-      </select>
-      <label for="amount" class="col-sm-2">Amount:</label>
-      <input id="amount" type="number" step="0.1" min="0" name="beer[ingredient_attributes][][amount]" value="<%= beer_ingredient_amount(ingredient_kind)%>">
-      <label>(kg)</label>
-      <br>
+        </select>
+      </div>
+      <div class="form-group"
+        <label for="amount" class="col-sm-1">Amount:</label>
+        <input id="amount" type="number" step="0.1" min="0.1" name="beer[ingredient_attributes][][amount]" value="<%= beer_ingredient_amount(ingredient_kind)%>">
+        <label>(kg)</label>
+        <br>
+      </div>
     </div>
   <% end %>
   <br>

@@ -7,7 +7,6 @@ class Ingredient < ApplicationRecord
   validates_presence_of :origin
   validates_presence_of :kind, message: "must be selected"
 
-
   #refactor into metaprogramming to populate
   scope :malt, -> { where(kind: 'malt') }
   scope :yeast, -> { where(kind: 'yeast') }

@@ -60,6 +60,7 @@ class Beer < ApplicationRecord
   end
 
   def ingredient_attributes
+
   end
 
   def find_beer_ingredient(ingredient_id)

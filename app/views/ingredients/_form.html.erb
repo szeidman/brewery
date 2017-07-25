@@ -16,8 +16,8 @@
     <%= f.text_field :name %><br>
     <%= f.label :origin, class: "col-sm-1" %>
     <%= f.text_field :origin %><br>
-    <label class="col-sm-1"><strong>Kind </strong></label>
-    <%= f.select :kind, ingredient_kinds, selected: @ingredient.kind, class: "col-sm-4" %>
+    <label class="col-sm-1"><strong>Kind<%=": #{@ingredient.kind}" if @ingredient.beers.any?%></strong></label>
+    <%= f.select :kind, ingredient_kinds, selected: @ingredient.kind, class: "col-sm-4" if !@ingredient.beers.any? %>
     <br>
     <%= f.submit %>
   <% end %>
