@@ -22,17 +22,6 @@
     <%= f.submit %>
   <% end %>
 <% else %>
-  <%#= render 'beers/ingredient_form' %>
-  <% if @beer.errors.any? %>
-  <div id="error_explanation">
-    <h4><%= pluralize(@beer.errors.count, "error") %> kept this beer from saving:</h4>
-    <ul>
-    <% @beer.errors.full_messages.each do |msg| %>
-      <li><%= message_check(msg) %></li>
-    <% end %>
-    </ul>
-  </div>
-  <% end %>
   <%= form_for @ingredient do |f| %>
       <%= hidden_field_tag "ingredient[beer][id]", @beer.id %>
       <%= label_tag "ingredient[beer][ingredient_attributes][][amount]", "Amount", class: "col-sm-1" %>
@@ -41,10 +30,14 @@
       <%= text_field_tag "ingredient[beer][ingredient_attributes][][name]" %><br>
       <%= label_tag "ingredient[beer][ingredient_attributes][][origin]", "Origin", class: "col-sm-1" %>
       <%= text_field_tag "ingredient[beer][ingredient_attributes][][origin]" %><br>
-      <%= label_tag "ingredient[beer][ingredient_attributes][][kind]", "Kind", class: "col-sm-1" %>
-      <select name="ingredient[beer][ingredient_attributes][][kind]">
+      <%= label_tag "ingredient_kind", "Kind", class: "col-sm-1" %>
+      <select id = "ingredient_kind", name="ingredient[beer][ingredient_attributes][][kind]">
         <% ingredient_kinds.each do |kind| %>
-          <option value="<%= kind %>"><%= kind %></option>
+          <% if params[:ingredient][:beer][:ingredient_attributes][0][:kind] == kind %>
+            <option selected="selected" value="<%= kind %>"><%= kind %></option>
+          <% else %>
+            <option value="<%= kind %>"><%= kind %></option>
+          <% end %>
         <% end %>
       </select>
       <br>
