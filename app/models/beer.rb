@@ -3,7 +3,6 @@ class Beer < ApplicationRecord
   has_many :beer_ingredients
   has_many :ingredients, through: :beer_ingredients
   accepts_nested_attributes_for :ingredients
-  accepts_nested_attributes_for :beer_ingredients
 
   validates_presence_of :name
   validates_uniqueness_of :name
@@ -11,11 +10,7 @@ class Beer < ApplicationRecord
   validates_numericality_of :abv, greater_than_or_equal_to: 0, less_than: 15
   validates_numericality_of :ibu, only_integer: true, greater_than_or_equal_to: 0, less_than: 150
   validates_numericality_of :srm, greater_than_or_equal_to: 1.0, less_than: 20.1
-  validates_associated :beer_ingredients
-
-  def amount_validate
-    errors.add(:ingredient_attributes, "amount")
-  end
+  validate :amount_check
 
   def ingredient_attributes=(ingredient_attributes)
     ingredient_attributes.each do |ingredient_attribute|
@@ -30,7 +25,7 @@ class Beer < ApplicationRecord
             old_beer_ingredient = self.beer_ingredients.find_by(ingredient_id: old_ingredient.id)
             old_beer_ingredient.update(ingredient_id: ingredient.id, amount: ingredient_attribute[:amount])
           else
-            self.beer_ingredients.create(ingredient_id: ingredient.id, amount: ingredient_attribute[:amount])
+            self.beer_ingredients.build(ingredient_id: ingredient.id, amount: ingredient_attribute[:amount])
           end
         end
       else
@@ -49,7 +44,14 @@ class Beer < ApplicationRecord
     end
   end
 
-  def ingredient_attributes
+  def amount_check
+    self.beer_ingredients.each do |beer_ingredient|
+      if beer_ingredient.amount == nil
+        errors.add(:base, "Amount for #{Ingredient.find_by(id: beer_ingredient.ingredient_id).name} cannot be blank.")
+      elsif beer_ingredient.amount.to_i <= 0
+        errors.add(:base, "Amount for #{Ingredient.find_by(id: beer_ingredient.ingredient_id).name} must be a number greater than zero.")
+      end
+    end
   end
 
   def find_beer_ingredient(ingredient_id)
@@ -74,7 +76,7 @@ class Beer < ApplicationRecord
 
   def save_ingredient_create_beer_ingredient(ingredient, ingredient_attribute)
     ingredient.save
-    self.beer_ingredients.create(ingredient_id: ingredient.id, amount: ingredient_attribute[:amount])
+    self.beer_ingredients.build(ingredient_id: ingredient.id, amount: ingredient_attribute[:amount])
   end
 
   def color

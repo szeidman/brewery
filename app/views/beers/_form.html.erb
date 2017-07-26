@@ -22,10 +22,10 @@
   <%= f.number_field :srm, class: 'text_field', step: 0.1, min: "1.0", max: "20.0" %><br>
   <h4>Ingredients:</h4>
   <% ingredient_kinds.each do |ingredient_kind| %>
-      <input type="hidden" name="beer[ingredient_attributes][][kind]" value="<%ingredient_kind%>">
       <div class="form-group">
-        <label for="ingredient_name" class="col-sm-1"><%=ingredient_kind.capitalize%>:</label>
-        <select id="ingredient_name" name="beer[ingredient_attributes][][name]" class="col-sm-2">
+        <%= hidden_field_tag "beer[ingredient_attributes][][kind]", "#{ingredient_kind}" %>
+        <%= label_tag "ingredient_name", ingredient_kind.capitalize, class: "col-sm-1"%>
+        <select id="ingredient_name" name="beer[ingredient_attributes][][name]" class="col-sm-3">
           <% Ingredient.send(ingredient_kind).each do |ingredient| %>
             <% if @beer.ingredients.find_by(name: ingredient.name) %>
               <option selected="selected" value="<%= ingredient.name %>"><%= ingredient.name %></option>
@@ -34,11 +34,8 @@
             <% end %>
           <% end %>
         </select>
-      </div>
-      <div class="form-group"
-        <label for="amount" class="col-sm-1">Amount:</label>
-        <input id="amount" type="number" step="0.1" min="0.1" name="beer[ingredient_attributes][][amount]" value="<%= beer_ingredient_amount(ingredient_kind)%>">
-        <label>(kg)</label>
+        <%= label_tag "beer[ingredient_attributes][][amount]", "Amount (kg):", class: "col-sm-2" %>
+        <%= number_field_tag "beer[ingredient_attributes][][amount]", beer_ingredient_amount(ingredient_kind), class: "col-sm-2" %>
         <br>
       </div>
     </div>
