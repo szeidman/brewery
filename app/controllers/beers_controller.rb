@@ -12,6 +12,7 @@ class BeersController < ApplicationController
   end
 
   def create
+    raise beer_params.inspect
     @beer = Beer.new(beer_params)
     if @beer.save
       redirect_to @beer, notice: 'Beer created.'
@@ -24,11 +25,11 @@ class BeersController < ApplicationController
   end
 
   def update
-    if @beer.update(beer_params)
-      redirect_to @beer, notice: 'Beer updated.'
-    else
-      render :edit
-    end
+      if @beer.update(beer_params)
+        redirect_to @beer, notice: 'Beer updated.'
+      else
+        render :edit
+      end
   end
 
   def destroy

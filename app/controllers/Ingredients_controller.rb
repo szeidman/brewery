@@ -31,16 +31,46 @@ class IngredientsController < ApplicationController
   end
 
   def new
-    has_beer
-    @ingredient = Ingredient.new
+    if has_beer
+      @ingredient = @beer.ingredients.build
+    else
+      @ingredient = Ingredient.new
+    end
   end
 
   def create
-    @ingredient = Ingredient.new(ingredient_params)
-    if @ingredient.save
-      redirect_to @ingredient
+    if has_beer
+      @ingredient = @beer.ingredients.build(name: params[:ingredient][:beer][:ingredient_attributes][0][:name], origin: params[:ingredient][:beer][:ingredient_attributes][0][:origin], kind: params[:ingredient][:beer][:ingredient_attributes][0][:kind])
+      @ingredient.beer_ingredients.build(beer_id: @beer.id, amount: params[:ingredient][:beer][:ingredient_attributes][0][:amount])
+      if @ingredient.valid?
+        old_ingredient = @beer.ingredients.find_by(kind: params[:ingredient][:beer][:ingredient_attributes][0][:kind])
+        if old_ingredient
+          old_beer_ingredient = @beer.beer_ingredients.find_by(ingredient_id: old_ingredient.id)
+          old_beer_ingredient.delete
+          if @ingredient.save
+            @ingredient.save
+            redirect_to beer_ingredients_path(@beer)
+          else
+            render :new
+          end
+        else
+          if @ingredient.save
+            @ingredient.save
+            redirect_to beer_ingredients_path(@beer)
+          else
+            render :new
+          end
+        end
+      else
+        render :new
+      end
     else
-      render :new
+      @ingredient = Ingredient.new(ingredient_params)
+      if @ingredient.save
+        redirect_to @ingredient
+      else
+        render :new
+      end
     end
   end
 
@@ -81,7 +111,11 @@ class IngredientsController < ApplicationController
   private
 
     def ingredient_params
-      params.require(:ingredient).permit(:name, :kind, :origin)
+      params.require(:ingredient).permit(:name, :kind, :origin, beer_ids: [], beer: [:id, ingredient_attributes: [:name, :origin, :kind]])
+    end
+
+    def beer_params
+      params.require(:beer).permit(:user_id, :name, :style, :abv, :ibu, :srm, ingredient_ids:[], ingredient_attributes: [:name, :origin, :kind, :amount])
     end
 
     def set_ingredient
@@ -89,7 +123,11 @@ class IngredientsController < ApplicationController
     end
 
     def has_beer
-      @beer = Beer.find_by(id: params[:beer_id])
+      if Beer.find_by(id: params[:beer_id])
+        @beer = Beer.find_by(id: params[:beer_id])
+      else
+        @beer = Beer.find_by(id: params[:ingredient][:beer][:id])
+      end
     end
 
 end

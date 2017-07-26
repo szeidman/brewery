@@ -23,20 +23,31 @@
   <% end %>
 <% else %>
   <%#= render 'beers/ingredient_form' %>
-  <%= form_for(@ingredient, as :beer) do |f| %>
-    <label class="col-sm-1">Amount</label>
-    <input type="number" step="0.1" min="0" name="beer[ingredient_attributes][][amount]"><br>
-    <label class="col-sm-1">Name</label>
-    <input name="beer[ingredient_attributes][][name]"><br>
-    <label class="col-sm-1">Origin</label>
-    <input name="beer[ingredient_attributes][][origin]"><br>
-    <label class="col-sm-1">Kind</label>
-    <select name="beer[ingredient_attributes][][kind]">
-      <% ingredient_kinds.each do |kind| %>
-        <option value="<%= kind %>"><%= kind %></option>
-      <% end %>
-    </select>
-    <br>
-    <%= f.submit %>
+  <% if @beer.errors.any? %>
+  <div id="error_explanation">
+    <h4><%= pluralize(@beer.errors.count, "error") %> kept this beer from saving:</h4>
+    <ul>
+    <% @beer.errors.full_messages.each do |msg| %>
+      <li><%= message_check(msg) %></li>
+    <% end %>
+    </ul>
+  </div>
+  <% end %>
+  <%= form_for @ingredient do |f| %>
+      <%= hidden_field_tag "ingredient[beer][id]", @beer.id %>
+      <%= label_tag "ingredient[beer][ingredient_attributes][][amount]", "Amount", class: "col-sm-1" %>
+      <%= number_field_tag "ingredient[beer][ingredient_attributes][][amount]", step: 0.1, min: 0 %><br>
+      <%= label_tag "ingredient[beer][ingredient_attributes][][name]", "Name", class: "col-sm-1" %>
+      <%= text_field_tag "ingredient[beer][ingredient_attributes][][name]" %><br>
+      <%= label_tag "ingredient[beer][ingredient_attributes][][origin]", "Origin", class: "col-sm-1" %>
+      <%= text_field_tag "ingredient[beer][ingredient_attributes][][origin]" %><br>
+      <%= label_tag "ingredient[beer][ingredient_attributes][][kind]", "Kind", class: "col-sm-1" %>
+      <select name="ingredient[beer][ingredient_attributes][][kind]">
+        <% ingredient_kinds.each do |kind| %>
+          <option value="<%= kind %>"><%= kind %></option>
+        <% end %>
+      </select>
+      <br>
+    <%= f.submit "Add ingredient to #{@beer.name}" %>
   <% end %>
 <% end %>
