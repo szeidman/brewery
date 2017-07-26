@@ -10,33 +10,31 @@ module IngredientsHelper
 
   def amount_params
     if params[:ingredient]
-      params[:ingredient][:beer][:ingredient_attributes][0][:amount]
-    else
-      ""
+      if params[:ingredient][:beer]
+        params[:ingredient][:beer][:ingredient_attributes][0][:amount]
+      end
     end
   end
 
   def kind_params
     if params[:ingredient]
-      params[:ingredient][:beer][:ingredient_attributes][0][:kind]
-    else
-      ""
+      if params[:ingredient][:beer]
+        params[:ingredient][:beer][:ingredient_attributes][0][:kind]
+      end
     end
   end
 
   def name_params
     if params[:ingredient]
-      params[:ingredient][:beer][:ingredient_attributes][0][:name]
-    else
-      ""
+      if params[:ingredient][:beer]
+        params[:ingredient][:beer][:ingredient_attributes][0][:name]
+      end
     end
   end
 
   def origin_params
     if params[:ingredient]
       params[:ingredient][:beer][:ingredient_attributes][0][:origin]
-    else
-      ""
     end
   end
 

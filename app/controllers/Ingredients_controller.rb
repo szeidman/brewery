@@ -131,7 +131,9 @@ class IngredientsController < ApplicationController
       if Beer.find_by(id: params[:beer_id])
         @beer = Beer.find_by(id: params[:beer_id])
       elsif params[:ingredient]
-        @beer = Beer.find_by(id: params[:ingredient][:beer][:id])
+        if params[:ingredient][:beer]
+          @beer = Beer.find_by(id: params[:ingredient][:beer][:id])
+        end
       end
     end
 
