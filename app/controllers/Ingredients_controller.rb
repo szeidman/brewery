@@ -49,14 +49,14 @@ class IngredientsController < ApplicationController
           old_beer_ingredient.delete
           if @ingredient.save
             @ingredient.save
-            redirect_to beer_ingredients_path(@beer)
+            redirect_to beer_ingredients_path(@beer), notice: "New beer ingredient added."
           else
             render :new
           end
         else
           if @ingredient.save
             @ingredient.save
-            redirect_to beer_ingredients_path(@beer)
+            redirect_to beer_ingredients_path(@beer), notice: "New beer ingredient added."
           else
             render :new
           end

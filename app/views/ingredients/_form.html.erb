@@ -24,16 +24,22 @@
 <% else %>
   <%= form_for @ingredient do |f| %>
       <%= hidden_field_tag "ingredient[beer][id]", @beer.id %>
+      <div class="<%= error_field?("base") %>">
       <%= label_tag "ingredient[beer][ingredient_attributes][][amount]", "Amount", class: "col-sm-1" %>
-      <%= number_field_tag "ingredient[beer][ingredient_attributes][][amount]", step: 0.1, min: 0 %><br>
+      </div>
+      <%= number_field_tag "ingredient[beer][ingredient_attributes][][amount]", amount_params, step: 0.1, min: 0 %><br>
+      <div class="<%= error_field?("name") %>">
       <%= label_tag "ingredient[beer][ingredient_attributes][][name]", "Name", class: "col-sm-1" %>
-      <%= text_field_tag "ingredient[beer][ingredient_attributes][][name]" %><br>
+      </div>
+      <%= text_field_tag "ingredient[beer][ingredient_attributes][][name]", name_params %><br>
+      <div class="<%= error_field?("origin") %>">
       <%= label_tag "ingredient[beer][ingredient_attributes][][origin]", "Origin", class: "col-sm-1" %>
-      <%= text_field_tag "ingredient[beer][ingredient_attributes][][origin]" %><br>
+      </div>
+      <%= text_field_tag "ingredient[beer][ingredient_attributes][][origin]", origin_params %><br>
       <%= label_tag "ingredient_kind", "Kind", class: "col-sm-1" %>
       <select id = "ingredient_kind", name="ingredient[beer][ingredient_attributes][][kind]">
         <% ingredient_kinds.each do |kind| %>
-          <% if params[:ingredient][:beer][:ingredient_attributes][0][:kind] == kind %>
+          <% if kind_params == kind %>
             <option selected="selected" value="<%= kind %>"><%= kind %></option>
           <% else %>
             <option value="<%= kind %>"><%= kind %></option>

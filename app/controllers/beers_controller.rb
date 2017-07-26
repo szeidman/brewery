@@ -12,7 +12,6 @@ class BeersController < ApplicationController
   end
 
   def create
-    raise beer_params.inspect
     @beer = Beer.new(beer_params)
     if @beer.save
       redirect_to @beer, notice: 'Beer created.'

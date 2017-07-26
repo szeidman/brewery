@@ -45,9 +45,9 @@ class Beer < ApplicationRecord
   def amount_check
     self.beer_ingredients.each do |beer_ingredient|
       if beer_ingredient.amount == nil
-        errors.add(:base, "Amount for #{kind_for_amount(beer_ingredient)} can't be blank.")
+        errors.add(:base, "Amount for #{kind_for_amount(beer_ingredient)} can't be blank")
       elsif beer_ingredient.amount.to_i <= 0
-        errors.add(:base, "Amount for #{kind_for_amount(beer_ingredient)} must be a number greater than zero.")
+        errors.add(:base, "Amount for #{kind_for_amount(beer_ingredient)} must be a number greater than zero")
       end
     end
   end
