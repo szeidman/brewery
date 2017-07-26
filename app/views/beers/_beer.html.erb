@@ -1,5 +1,5 @@
 <%= link_to beer_path(beer) do %>
   <p>
-    <%= beer.name %>
+    <%= beer.name -%> <%= "(by you)" if beer.user_id == current_user.id %>
   </p>
 <% end %>
