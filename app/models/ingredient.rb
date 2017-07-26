@@ -10,12 +10,12 @@ class Ingredient < ApplicationRecord
   validates_presence_of :origin
   validates_presence_of :kind, message: "must be selected"
 
-
-  #refactor into metaprogramming to populate
+  #refactor w/metaprogramming to populate?
   scope :malt, -> { where(kind: 'malt') }
   scope :yeast, -> { where(kind: 'yeast') }
   scope :hops, -> { where(kind: 'hops') }
   scope :water, -> { where(kind: 'water') }
+  scope :name_order, -> { order(name: :asc) }
 
   def amount_check
     self.beer_ingredients.each do |beer_ingredient|

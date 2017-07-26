@@ -1,4 +1,4 @@
-<h4> <%= @ingredient.beers.count > 1 ? "Also found in:" : "This is the only beer we brew with this ingredient." %> </h4>
+<h4> <%= !@beer || @ingredient.beers.count > 1 ? "Also found in:" : "#{@beer.name} is our only beer with this ingredient." %> </h4>
 <% @ingredient.beers.each do |beer| %>
   <% if beer != @beer %>
     <%= render partial: 'beers/beer', locals: {beer: beer} %>
