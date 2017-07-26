@@ -2,5 +2,7 @@
 <ul class="list-group">
   <%= render @ingredients %>
 </ul>
-<%= button_to "Add an Ingredient", @beer ? new_beer_ingredient_path : new_ingredient_path, method: :get if current_user %>
+<%= button_to "Add an Ingredient to #{@beer.name}", new_beer_ingredient_path, method: :get if creator? %>
+<%= button_to "Add an Ingredient", new_ingredient_path, method: :get if current_user && !creator? && !@beer %>
 <br>
+<%= button_to "Back to #{@beer.name}", @beer, method: :get if @beer %>

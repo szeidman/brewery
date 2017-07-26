@@ -1,5 +1,6 @@
 class IngredientsController < ApplicationController
   before_action :set_ingredient, only: [:edit, :update, :destroy]
+  helper_method :creator_user_only?
 
   def index
     if params[:beer_id]
@@ -32,7 +33,11 @@ class IngredientsController < ApplicationController
 
   def new
     if has_beer
-      @ingredient = @beer.ingredients.build
+      if creator?
+        @ingredient = @beer.ingredients.build
+      else
+        redirect_to @beer, notice: "Only the brewer who created the beer can perform this action."
+      end
     else
       @ingredient = Ingredient.new
     end
@@ -101,7 +106,7 @@ class IngredientsController < ApplicationController
 
   def destroy
     if @ingredient.beers.any?
-      redirect_to @ingredient, notice: 'This ingredient cannot be deleted because other beers have it!'
+      redirect_to @ingredient, notice: 'This ingredient cannot be deleted because beers need it!'
     else
       @ingredient.destroy
       redirect_to ingredients_path, notice: 'Ingredient was successfully deleted.'
@@ -125,7 +130,7 @@ class IngredientsController < ApplicationController
     def has_beer
       if Beer.find_by(id: params[:beer_id])
         @beer = Beer.find_by(id: params[:beer_id])
-      else
+      elsif params[:ingredient]
         @beer = Beer.find_by(id: params[:ingredient][:beer][:id])
       end
     end

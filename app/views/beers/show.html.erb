@@ -9,4 +9,7 @@
 <h4><%= link_to "See the Ingredients", beer_ingredients_path(@beer) %></h4>
 
 <br>
-<%= button_to "Edit Beer", edit_beer_path, method: :get if current_user %>
+<%if creator? %>
+<%= button_to "Edit Beer", edit_beer_path, method: :get%>
+<%= button_to "Delete Beer", beer_path(@beer), method: :delete%>
+<% end %>

@@ -1,5 +1,6 @@
 class BeersController < ApplicationController
   before_action :set_beer, only: [:show, :edit, :update, :destroy]
+  before_action :creator_restrict, only: [:edit, :update, :destroy]
 
   def index
     @beers = Beer.all
@@ -24,14 +25,16 @@ class BeersController < ApplicationController
   end
 
   def update
-      if @beer.update(beer_params)
-        redirect_to @beer, notice: 'Beer updated.'
-      else
-        render :edit
-      end
+    if @beer.update(beer_params)
+      redirect_to @beer, notice: 'Beer updated.'
+    else
+      render :edit
+    end
   end
 
   def destroy
+    @beer.destroy
+    redirect_to beers_path, notice: 'Beer was successfully deleted.'
   end
 
   def show
@@ -45,6 +48,12 @@ class BeersController < ApplicationController
 
     def beer_params
       params.require(:beer).permit(:user_id, :name, :style, :abv, :ibu, :srm, ingredient_ids:[], ingredient_attributes: [:name, :origin, :kind, :amount])
+    end
+
+    def creator_restrict
+      if !creator?
+        redirect_to @beer, notice: "Only the brewer who created the beer can perform this action."
+      end
     end
 
   end
