@@ -11,10 +11,8 @@ module BeersHelper
   def beer_ingredient_amount(ingredient_kind)
     if @beer.find_beer_ingredient_amount(ingredient_kind)
       @beer.find_beer_ingredient_amount(ingredient_kind)
-    elsif instance_variable_get("@#{ingredient_kind}")
-      instance_variable_get("@#{ingredient_kind}").beer_ingredients.first.amount
     else
-      ""
+      @beer.beer_ingredients[ingredient_kinds_numbers(ingredient_kind)].amount
     end
   end
 
