@@ -34,7 +34,11 @@
             <% end %>
           <% end %>
         </select>
-        <%= label_tag "beer[ingredient_attributes][][amount]", "Amount (kg):", class: "col-sm-2" %>
+        <% if @beer.errors.messages[:base].include?("Amount for #{ingredient_kind} cannot be blank.") %>
+          <%= label_tag "beer[ingredient_attributes][][amount]", "Amount (kg):", class: "col-sm-2 field_with_errors" %>
+        <% else %>
+          <%= label_tag "beer[ingredient_attributes][][amount]", "Amount (kg):", class: "col-sm-2" %>
+        <% end %>
         <%= number_field_tag "beer[ingredient_attributes][][amount]", beer_ingredient_amount(ingredient_kind), class: "col-sm-2" %>
         <br>
       </div>

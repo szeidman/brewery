@@ -30,15 +30,13 @@ class Beer < ApplicationRecord
         end
       else
         ingredient = self.ingredients.build(name: ingredient_attribute[:name], origin: ingredient_attribute[:origin], kind: ingredient_attribute[:kind])
-        if ingredient.valid?
-          old_ingredient = self.ingredients.find_by(kind: ingredient_attribute[:kind])
-          if old_ingredient
-            old_beer_ingredient = self.beer_ingredients.find_by(ingredient_id: old_ingredient.id)
-            old_beer_ingredient.delete
-            save_ingredient_create_beer_ingredient(ingredient, ingredient_attribute)
-          else
-            save_ingredient_create_beer_ingredient(ingredient, ingredient_attribute)
-          end
+        old_ingredient = self.ingredients.find_by(kind: ingredient_attribute[:kind])
+        if old_ingredient
+          old_beer_ingredient = self.beer_ingredients.find_by(ingredient_id: old_ingredient.id)
+          old_beer_ingredient.delete
+          save_ingredient_create_beer_ingredient(ingredient, ingredient_attribute)
+        else
+          save_ingredient_create_beer_ingredient(ingredient, ingredient_attribute)
         end
       end
     end
@@ -47,10 +45,18 @@ class Beer < ApplicationRecord
   def amount_check
     self.beer_ingredients.each do |beer_ingredient|
       if beer_ingredient.amount == nil
-        errors.add(:base, "Amount for #{Ingredient.find_by(id: beer_ingredient.ingredient_id).name} cannot be blank.")
+        errors.add(:base, "Amount for #{kind_for_amount(beer_ingredient)} can't be blank.")
       elsif beer_ingredient.amount.to_i <= 0
-        errors.add(:base, "Amount for #{Ingredient.find_by(id: beer_ingredient.ingredient_id).name} must be a number greater than zero.")
+        errors.add(:base, "Amount for #{kind_for_amount(beer_ingredient)} must be a number greater than zero.")
       end
+    end
+  end
+
+  def kind_for_amount(beer_ingredient)
+    if Ingredient.find_by(id: beer_ingredient.ingredient_id)
+      Ingredient.find_by(id: beer_ingredient.ingredient_id).kind
+    else
+      "ingredient"
     end
   end
 

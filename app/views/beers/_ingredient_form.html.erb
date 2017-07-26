@@ -8,7 +8,7 @@
   </ul>
 </div>
 <% end %>
-<%= form_for @beer do |f| %>
+<%= form_for(@ingredient, as :beer) do |f| %>
   <label class="col-sm-1">Amount</label>
   <input type="number" step="0.1" min="0" name="beer[ingredient_attributes][][amount]"><br>
   <label class="col-sm-1">Name</label>

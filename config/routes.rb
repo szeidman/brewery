@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   root 'home#index'
   resources :beers do
-    resources :ingredients, only: [:show, :index, :new]
+    resources :ingredients, only: [:show, :index, :new, :create]
   end
   get 'ingredients/hops', :to => 'ingredients#hops'
   get 'ingredients/yeast', :to => 'ingredients#yeast'
