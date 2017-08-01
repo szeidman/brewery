@@ -34,7 +34,7 @@
             <% end %>
           <% end %>
         </select>
-        <div class="<%= beer_error?("base") %>">
+        <div class="<%= base_beer_error(ingredient_kind) %>">
           <%= label_tag "beer[ingredient_attributes][][amount]", "Amount (kg):", class: "col-sm-2" %>
         </div>
         <%= number_field_tag "beer[ingredient_attributes][][amount]", beer_ingredient_amount(ingredient_kind), class: "col-sm-2" %>
