@@ -59,7 +59,7 @@ ActiveRecord::Schema.define(version: 20170719161648) do
     t.string "uid"
     t.string "name"
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["name"], name: "index_users_ on_name"
+    t.index ["name"], name: "index_users_on_name"
     t.index ["provider"], name: "index_users_on_provider"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["uid"], name: "index_users_on_uid"

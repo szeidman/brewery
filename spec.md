@@ -30,7 +30,7 @@ Beers/:id/ingredients implemented.
 - [x] Include nested resource "new" form (URL e.g. recipes/1/ingredients)
 Beers/:id/ingredients/new implemented.
 - [x] Include form display of validation errors (form URL e.g. /recipes/new)
-Each form will display error messages after submit and 
+Each form will display error messages after submit
 
 Confirm:
 - [x] The application is pretty DRY

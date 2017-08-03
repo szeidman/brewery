@@ -1,24 +1,9 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
+This is an application for managing beer recipes and ingredients. Users without accounts can view beers and ingredients. Users with accounts can create new ingredients and beers, and edit and delete beers they have created.
 
 * Ruby version: ruby 2.3.3p222
 
-* System dependencies
+* To use: Run bundle install and rake db:migrate
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* MIT License

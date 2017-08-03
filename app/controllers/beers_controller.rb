@@ -47,7 +47,7 @@ class BeersController < ApplicationController
     end
 
     def beer_params
-      params.require(:beer).permit(:user_id, :name, :style, :abv, :ibu, :srm, ingredient_ids:[], ingredient_attributes: [:name, :origin, :kind, :amount])
+      params.require(:beer).permit(:user_id, :name, :style, :abv, :ibu, :srm, :favorite, ingredient_ids:[], ingredient_attributes: [:name, :origin, :kind, :amount])
     end
 
     def creator_restrict
