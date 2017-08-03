@@ -21,7 +21,7 @@ class Ingredient < ApplicationRecord
     self.beer_ingredients.each do |beer_ingredient|
       if beer_ingredient.amount == nil
         errors.add(:base, "Amount can't be blank")
-      elsif beer_ingredient.amount.to_i <= 0
+      elsif beer_ingredient.amount.to_f <= 0
         errors.add(:base, "Amount must be a number greater than zero")
       end
     end
