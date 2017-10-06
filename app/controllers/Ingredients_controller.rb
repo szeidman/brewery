@@ -7,11 +7,19 @@ class IngredientsController < ApplicationController
        @beer = Beer.find(params[:beer_id])
        if @beer
          @ingredients = @beer.ingredients
+         respond_to do |format|
+           format.html { render :index }
+           format.json { render json: @ingredients }
+         end
        else
          redirect_to beers_path, alert: "Beer not found."
        end
      else
        @ingredients = Ingredient.all
+       respond_to do |format|
+         format.html { render :index }
+         format.json { render json: @ingredients }
+       end
      end
   end
 
