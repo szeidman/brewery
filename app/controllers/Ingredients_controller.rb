@@ -94,13 +94,20 @@ class IngredientsController < ApplicationController
   def show
     if has_beer
       if @ingredient = @beer.ingredients.find_by(id: params[:id])
-        @ingredient
         @amount = @beer.beer_ingredients.find_by(ingredient_id: params[:id]).amount
+        respond_to do |format|
+          format.html { render :show }
+          format.json { render json: @ingredient }
+        end
       else
         redirect_to beer_ingredients_path(@beer), alert: "Ingredient not found."
       end
     else
       set_ingredient
+      respond_to do |format|
+        format.html { render :show }
+        format.json { render json: @ingredient }
+      end
     end
   end
 
