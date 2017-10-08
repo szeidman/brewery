@@ -26,7 +26,8 @@ function loadIngredients(e) {
   e.preventDefault();
   $.get(window.location.href + '.json', function (data) {
     let ingredientsList = HandlebarsTemplates['ingredients_list']({
-      ingredients: data.ingredients
+      ingredients: data.ingredients,
+      beerId: data.id
     });
     $("#ingredients-index-list").html(ingredientsList)
   })

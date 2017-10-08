@@ -1,4 +1,4 @@
 <h4>Ingredients: </h4>
-{{#ingredients}}
-  <p> {{name}} ({{kind}})</p>
-{{/ingredients}}
+{{#each ingredients}}
+  <p> <a href="/beers/{{../beerId}}/ingredients/{{id}}">{{name}}</a> ({{kind}})</p>
+{{/each}}
