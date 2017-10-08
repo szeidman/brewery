@@ -6,7 +6,12 @@
 
 <br>
 
-<h4><%= link_to "See the Ingredients", beer_ingredients_path(@beer) %></h4>
+
+<h4 id="see-ingredients-header">
+  <a id="see-ingredients-link" href="#">See the Ingredients</a>
+</h4>
+<div id="ingredients-index-list">
+</div>
 
 <br>
 <%if creator? %>

@@ -1,4 +1,4 @@
-<ul id="ingredients-index-list" class="list-group">
+<ul class="list-group">
   <%= render @ingredients.name_order %>
 </ul>
 
@@ -6,9 +6,3 @@
 <%= button_to "Add an Ingredient", new_ingredient_path, method: :get if current_user && !creator? && !@beer %>
 
 <%= button_to "Back to #{@beer.name}", @beer, method: :get if @beer %>
-
-<script id="ingredient-list-js" type="text/x-handlebars-template">
-    {{#each ingredients}}
-      <p> {{name}} </p>
-    {{/each}}
-</script>

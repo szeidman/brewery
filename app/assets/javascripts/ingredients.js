@@ -1,9 +1,10 @@
-function init() {
-
-}
-document.addEventListener("DOMContentLoaded", function(event) {
-  init()
+$(function(){
+  $("#see-ingredients-link").click(function(event){
+    loadIngredients(event);
+  })
 })
+
+console.log(window.location.href)
 
 function Ingredient(attributes) {
   this.id = attributes.id;
@@ -16,8 +17,22 @@ function Ingredient(attributes) {
 
 }
 
-function indexList() {
-
+Ingredient.prototype.renderLI = function(){
 }
+
+$("see-ingredients-link")
+
+function loadIngredients(e) {
+  e.preventDefault();
+  $.get('/ingredients.json', function (data) {
+    let ingredientsList = HandlebarsTemplates['ingredients_list']({
+      ingredients: data
+    });
+    $("#ingredients-index-list").html(ingredientsList)
+  })
+}
+
+
+
 
 // id="ingredients-index-list"
