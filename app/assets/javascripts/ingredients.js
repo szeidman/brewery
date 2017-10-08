@@ -4,29 +4,29 @@ $(function(){
   })
 })
 
-console.log(window.location.href)
+//console.log(window.location.href)
 
-function Ingredient(attributes) {
-  this.id = attributes.id;
-  this.name = attributes.name;
-  this.kind = attributes.kind;
-  this.origin = attributes.origin;
-  this.beers = [];
-
-  //attributes.beers push each beer
-
-}
-
-Ingredient.prototype.renderLI = function(){
-}
-
-$("see-ingredients-link")
+// function Ingredient(attributes) {
+//   this.id = attributes.id;
+//   this.name = attributes.name;
+//   this.kind = attributes.kind;
+//   this.origin = attributes.origin;
+//   this.beers = [];
+//
+//   //attributes.beers push each beer
+//
+// }
+//
+// Ingredient.prototype.renderLI = function(){
+// }
+//
+// $("see-ingredients-link")
 
 function loadIngredients(e) {
   e.preventDefault();
-  $.get('/ingredients.json', function (data) {
+  $.get(window.location.href + '.json', function (data) {
     let ingredientsList = HandlebarsTemplates['ingredients_list']({
-      ingredients: data
+      ingredients: data.ingredients
     });
     $("#ingredients-index-list").html(ingredientsList)
   })
