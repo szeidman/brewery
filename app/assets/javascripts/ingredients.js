@@ -5,7 +5,7 @@ $(function(){
   $(".js-next").on("click", function(e){
     showNextIngredient(e)
   })
-
+  $("form#new_ingredient").on("submit", Ingredient.formSubmit)
 })
 
 //console.log(window.location.href)
@@ -15,8 +15,32 @@ function Ingredient(attributes) {
    this.name = attributes.name;
    this.kind = attributes.kind;
    this.origin = attributes.origin;
-   this.beers = attributes.beers;
  }
+
+Ingredient.formSubmit = function(e){
+  e.preventDefault();
+  var $form = $(this);
+  var action = $form.attr("action");
+  var params = $form.serialize();
+
+  $.ajax({
+    url: action,
+    data: params,
+    dataType: "json",
+    method: "POST"
+  })
+    .success(Ingredient.success)
+    .error(Ingredient.error)
+}
+
+Ingredient.success = function(json){
+  console.log(json)
+}
+
+
+Ingredient.error = function(){
+  debugger;
+}
 
 function loadIngredients(e) {
   e.preventDefault();
@@ -42,7 +66,7 @@ function showNextIngredient(e) {
       let beerName = data.name;
       let ingredients = data.ingredients;
       let beerIngredients = data.beer_ingredients;
-      //below should be functioned out
+
       let inArray = ingredients.find(ingredient => {
          return ingredient.id === ingredientID
        })
@@ -53,7 +77,9 @@ function showNextIngredient(e) {
         return beerIngredient.ingredient_id === ingredientID
       });
       let nextAmount = nextBeerIngredient.amount;
-      //Beers: get all the beers for an ingredient, then remove the current beer from the array. Register a handlebars helper.  ;
+
+      //TODO: Beers: get all the beers for an ingredient, then remove the current beer from the array. Register a handlebars helper.
+
       let ingredientShow = HandlebarsTemplates['ingredients_show']({
         beer:   beerName,
         beerID: beerID,
@@ -87,8 +113,3 @@ function showNextIngredient(e) {
     });
   }
 }
-
-
-
-
-// id="ingredients-index-list"
