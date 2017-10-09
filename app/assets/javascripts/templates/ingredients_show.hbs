@@ -7,3 +7,18 @@
 {{#if amount}}
   <p>Each batch of <a href="/beers/{{beerID}}">{{beer}}</a> requires <strong>{{amount}}kg</strong> of this ingredient.</p>
 {{/if}}
+<br><br>
+<h4>
+  {{#if beer}}
+  {{else}}
+    {{#if beers}}
+      Found in:
+    {{else}}
+      None of our current beers use this ingredient.
+    {{/if}}
+  {{/if}}
+</h4>
+  {{#beers}}
+    <p><a href="/beers/{{id}}">{{name}}</p>
+  {{/beers}}
+<br>

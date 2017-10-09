@@ -1,10 +1,11 @@
 $(function(){
-  $(".see-ingredients-link").on('click', function(e){
+  $(".see-ingredients-link").click(function(e){
     loadIngredients(e);
   })
   $(".js-next").on("click", function(e){
     showNextIngredient(e)
   })
+
 })
 
 //console.log(window.location.href)
@@ -36,7 +37,6 @@ function showNextIngredient(e) {
   e.preventDefault();
   let beerID = parseInt($(".js-next").attr("data-beer"));
   let ingredientID = parseInt($(".js-next").attr("data-ing"));
-  let amount = parseInt($(".js-next").attr("data-amount"));
   if (beerID) {
     $.get(`/beers/${beerID}.json`, function (data) {
       let beerName = data.name;
@@ -53,24 +53,40 @@ function showNextIngredient(e) {
         return beerIngredient.ingredient_id === ingredientID
       });
       let nextAmount = nextBeerIngredient.amount;
-      debugger;
-      //let nextAmount = data.beer_ingredients;
+      //Beers: get all the beers for an ingredient, then remove the current beer from the array. Register a handlebars helper.  ;
       let ingredientShow = HandlebarsTemplates['ingredients_show']({
         beer:   beerName,
         beerID: beerID,
+        ingID:  nextIngredient.id,
         name:   nextIngredient.name,
         kind:   nextIngredient.kind,
         origin: nextIngredient.origin,
         amount: nextAmount
       });
-      $(".show-ingredient").html(ingredientShow)
+      $(".show-ingredient").html(ingredientShow);
+      $(".js-next").attr('data-ing', nextIngredient.id)
     });
   } else {
-
-
+    $.get(`/ingredients.json`, function (data) {
+      let ingredients = data;
+      let inArray = ingredients.find(ingredient => {
+         return ingredient.id === ingredientID
+       })
+      let position = ingredients.indexOf(inArray);
+      let nextPosition = ++position;
+      let nextIngredient = ingredients[nextPosition];
+      let ingredientShow = HandlebarsTemplates['ingredients_show']({
+        ingID:  nextIngredient.id,
+        name:   nextIngredient.name,
+        kind:   nextIngredient.kind,
+        origin: nextIngredient.origin,
+        beers:  nextIngredient.beers
+    });
+    $(".show-ingredient").html(ingredientShow);
+    $(".js-next").attr("data-ing", nextIngredient.id);
+    });
   }
 }
-
 
 
 
