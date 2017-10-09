@@ -48,7 +48,7 @@ function showNextIngredient(e) {
        })
       let position = ingredients.indexOf(inArray);
       let nextPosition = ++position;
-      let nextIngredient = ingredients[nextPosition];
+      let nextIngredient = ingredients[nextPosition] ? ingredients[nextPosition] : ingredients[0];
       let nextBeerIngredient = beerIngredients.find(beerIngredient => {
         return beerIngredient.ingredient_id === ingredientID
       });
@@ -74,7 +74,7 @@ function showNextIngredient(e) {
        })
       let position = ingredients.indexOf(inArray);
       let nextPosition = ++position;
-      let nextIngredient = ingredients[nextPosition];
+      let nextIngredient = ingredients[nextPosition] ? ingredients[nextPosition] : ingredients[0];
       let ingredientShow = HandlebarsTemplates['ingredients_show']({
         ingID:  nextIngredient.id,
         name:   nextIngredient.name,
