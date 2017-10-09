@@ -1,5 +1,5 @@
 $(function(){
-  $("#see-ingredients-link").click(function(event){
+  $(".see-ingredients-link").click(function(event){
     loadIngredients(event);
   })
 })
@@ -24,7 +24,8 @@ $(function(){
 
 function loadIngredients(e) {
   e.preventDefault();
-  $.get(window.location.href + '.json', function (data) {
+  let dataID = $(".see-ingredients-link").attr("data-id");
+  $.get(`/beers/${dataID}.json`, function (data) {
     let ingredientsList = HandlebarsTemplates['ingredients_list']({
       ingredients: data.ingredients,
       beerId: data.id
