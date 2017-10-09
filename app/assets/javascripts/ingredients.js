@@ -6,21 +6,13 @@ $(function(){
 
 //console.log(window.location.href)
 
-// function Ingredient(attributes) {
-//   this.id = attributes.id;
-//   this.name = attributes.name;
-//   this.kind = attributes.kind;
-//   this.origin = attributes.origin;
-//   this.beers = [];
-//
-//   //attributes.beers push each beer
-//
-// }
-//
-// Ingredient.prototype.renderLI = function(){
-// }
-//
-// $("see-ingredients-link")
+function Ingredient(attributes) {
+   this.id = attributes.id;
+   this.name = attributes.name;
+   this.kind = attributes.kind;
+   this.origin = attributes.origin;
+   this.beers = attributes.beers;
+ }
 
 function loadIngredients(e) {
   e.preventDefault();
@@ -33,6 +25,8 @@ function loadIngredients(e) {
     $("#ingredients-index-list").html(ingredientsList)
   })
 }
+
+
 
 
 

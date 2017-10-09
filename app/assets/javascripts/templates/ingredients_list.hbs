@@ -4,6 +4,7 @@
     <p> <a href="/beers/{{../beerId}}/ingredients/{{id}}">{{name}}</a> ({{kind}})</p>
   {{/each}}
 {{else}}
+  <h1>Ingredients</h1>
   {{#each ingredients}}
     <p><a href="/ingredients/{{id}}">{{name}}</a></p>
   {{/each}}
