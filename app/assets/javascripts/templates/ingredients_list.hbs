@@ -1,4 +1,10 @@
-<h4>Ingredients: </h4>
-{{#each ingredients}}
-  <p> <a href="/beers/{{../beerId}}/ingredients/{{id}}">{{name}}</a> ({{kind}})</p>
-{{/each}}
+{{#if ingredients}}
+  <h4>Ingredients: </h4>
+  {{#each ingredients}}
+    <p> <a href="/beers/{{../beerId}}/ingredients/{{id}}">{{name}}</a> ({{kind}})</p>
+  {{/each}}
+{{else}}
+  {{#each ingredients}}
+    <p><a href="/ingredients/{{id}}">{{name}}</a></p>
+  {{/each}}
+{{/if}}
