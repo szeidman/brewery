@@ -1,0 +1,9 @@
+<h1>{{name}}</h1>
+<h3>({{kind}})</h3>
+<br>
+<p>
+ <strong>Origin:</strong> {{origin}}<br>
+</p>
+{{#if amount}}
+  <p>Each batch of <a href="/beers/{{beerID}}">{{beer}}</a> requires <strong>{{amount}}kg</strong> of this ingredient.</p>
+{{/if}}

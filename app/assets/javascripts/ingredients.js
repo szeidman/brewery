@@ -3,7 +3,7 @@ $(function(){
     loadIngredients(e);
   })
   $(".js-next").on("click", function(e){
-    showIngredient(e)
+    showNextIngredient(e)
   })
 })
 
@@ -32,13 +32,45 @@ function loadIngredients(e) {
 //get array of total ingredient IDs. Find length, find index number for data ID.
 //function showIngredietsFromBeer
 
-function showIngredient(e) {
+function showNextIngredient(e) {
   e.preventDefault();
-  let beerID = $(".js-next").attr("data-beer");
-  let ingredientID = $(".js-next").attr("data-ing");
-  let amount = $(".js-next").attr("data-amount");
-  debugger;
+  let beerID = parseInt($(".js-next").attr("data-beer"));
+  let ingredientID = parseInt($(".js-next").attr("data-ing"));
+  let amount = parseInt($(".js-next").attr("data-amount"));
+  if (beerID) {
+    $.get(`/beers/${beerID}.json`, function (data) {
+      let beerName = data.name;
+      let ingredients = data.ingredients;
+      let beerIngredients = data.beer_ingredients;
+      //below should be functioned out
+      let inArray = ingredients.find(ingredient => {
+         return ingredient.id === ingredientID
+       })
+      let position = ingredients.indexOf(inArray);
+      let nextPosition = ++position;
+      let nextIngredient = ingredients[nextPosition];
+      let nextBeerIngredient = beerIngredients.find(beerIngredient => {
+        return beerIngredient.ingredient_id === ingredientID
+      });
+      let nextAmount = nextBeerIngredient.amount;
+      debugger;
+      //let nextAmount = data.beer_ingredients;
+      let ingredientShow = HandlebarsTemplates['ingredients_show']({
+        beer:   beerName,
+        beerID: beerID,
+        name:   nextIngredient.name,
+        kind:   nextIngredient.kind,
+        origin: nextIngredient.origin,
+        amount: nextAmount
+      });
+      $(".show-ingredient").html(ingredientShow)
+    });
+  } else {
+
+
+  }
 }
+
 
 
 

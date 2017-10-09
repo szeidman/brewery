@@ -1,15 +1,18 @@
-<h1><%= @ingredient.name -%></h1>
-<h3>(<%= @ingredient.kind -%>)</h3>
-<br>
-<%= render partial: 'attribute', locals: {title: "Origin:", value: @ingredient.origin} %>
-<%= render partial: 'amount' %>
-<br><br>
-<%= render partial: 'found' %>
+<div class="show-ingredient">
+  <h1><%= @ingredient.name -%></h1>
+  <h3>(<%= @ingredient.kind -%>)</h3>
+  <br>
+  <%= render partial: 'attribute', locals: {title: "Origin:", value: @ingredient.origin} %>
+  <%= render partial: 'amount' %>
+  <br><br>
+  <%= render partial: 'found' %>
 
-<br>
-<%= button_to "Edit Ingredient", edit_ingredient_path, method: :get if current_user && !@beer %>
-<%= button_to "Delete Ingredient", ingredient_path(@ingredient), method: :delete if current_user && !@beer%>
-<br>
-<%= button_to "Back to #{@beer.name} ingredients", beer_ingredients_path(@beer), method: :get if @beer %>
-<%= button_to "Back to #{@beer.name}", @beer, method: :get if @beer %>
-<a href="#" class="js-next" data-beer="<%=@beer.id if @beer%>" data-ing="<%=@ingredient.id%>" data-amount="<%=@amount if @amount%>">Next Beer</a>
+  <br>
+  <%= button_to "Edit Ingredient", edit_ingredient_path, method: :get if current_user && !@beer %>
+  <%= button_to "Delete Ingredient", ingredient_path(@ingredient), method: :delete if current_user && !@beer%>
+  <br>
+  <%= button_to "Back to #{@beer.name} ingredients", beer_ingredients_path(@beer), method: :get if @beer %>
+  <%= button_to "Back to #{@beer.name}", @beer, method: :get if @beer %>
+  <a href="#" class="js-next" data-beer="<%=@beer.id if @beer%>" data-ing="<%=@ingredient.id%>" data-amount="<%=@amount if @amount%>">See Next</a>
+  <a href="#" class="js-prev" data-beer="<%=@beer.id if @beer%>" data-ing="<%=@ingredient.id%>" data-amount="<%=@amount if @amount%>">See Previous</a>
+</div>
