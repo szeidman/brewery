@@ -1,10 +1,9 @@
 $(function(){
-  console.log("loaded")
   $(".see-ingredients-link").on('click', function(e){
     loadIngredients(e);
   })
-  $(".js-next").on("click", function(event){
-    Ingredient.showIngredient(event)
+  $(".js-next").on("click", function(e){
+    showIngredient(e)
   })
 })
 
@@ -33,18 +32,12 @@ function loadIngredients(e) {
 //get array of total ingredient IDs. Find length, find index number for data ID.
 //function showIngredietsFromBeer
 
-Ingredient.prototype.showIngredient = function () {
+function showIngredient(e) {
   e.preventDefault();
-  let dataID = $(".js-next").attr("data-id");
-  let nextID = ++dataID;
-  let prevID = --dataID;
-  $.get(`/beers/${dataID}.json`, function (data) {
-    let ingredientsList = HandlebarsTemplates['ingredients_list']({
-      ingredients: data.ingredients,
-      beerId: data.id
-    });
-    $("#ingredients-index-list").html(ingredientsList)
-  })
+  let beerID = $(".js-next").attr("data-beer");
+  let ingredientID = $(".js-next").attr("data-ing");
+  let amount = $(".js-next").attr("data-amount");
+  debugger;
 }
 
 

@@ -12,4 +12,4 @@
 <br>
 <%= button_to "Back to #{@beer.name} ingredients", beer_ingredients_path(@beer), method: :get if @beer %>
 <%= button_to "Back to #{@beer.name}", @beer, method: :get if @beer %>
-<a href="#" class="js-next" data-beer="<%=@beer.id%>" data-ing="<%=@ingredient.id%>">Next Beer</a>
+<a href="#" class="js-next" data-beer="<%=@beer.id if @beer%>" data-ing="<%=@ingredient.id%>" data-amount="<%=@amount if @amount%>">Next Beer</a>
