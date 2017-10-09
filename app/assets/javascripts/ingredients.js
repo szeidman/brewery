@@ -1,6 +1,10 @@
 $(function(){
-  $(".see-ingredients-link").click(function(event){
-    loadIngredients(event);
+  console.log("loaded")
+  $(".see-ingredients-link").on('click', function(e){
+    loadIngredients(e);
+  })
+  $(".js-next").on("click", function(event){
+    Ingredient.showIngredient(event)
   })
 })
 
@@ -26,7 +30,22 @@ function loadIngredients(e) {
   })
 }
 
+//get array of total ingredient IDs. Find length, find index number for data ID.
+//function showIngredietsFromBeer
 
+Ingredient.prototype.showIngredient = function () {
+  e.preventDefault();
+  let dataID = $(".js-next").attr("data-id");
+  let nextID = ++dataID;
+  let prevID = --dataID;
+  $.get(`/beers/${dataID}.json`, function (data) {
+    let ingredientsList = HandlebarsTemplates['ingredients_list']({
+      ingredients: data.ingredients,
+      beerId: data.id
+    });
+    $("#ingredients-index-list").html(ingredientsList)
+  })
+}
 
 
 

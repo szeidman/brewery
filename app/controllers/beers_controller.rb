@@ -39,8 +39,8 @@ class BeersController < ApplicationController
 
   def show
     respond_to do |format|
-      format.html { render :show }
       format.json { render json: @beer }
+      format.html { render :show }  
     end
   end
 
