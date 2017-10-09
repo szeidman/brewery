@@ -36,6 +36,10 @@ Ingredient.formSubmit = function(e){
 Ingredient.success = function(json){
   let ingredient = new Ingredient(json);
   $('.new-ingredient').append(ingredient.name);
+  $("form#new_ingredient").each(function(){
+    this.reset();
+  });
+  $("form#new_ingredient input:submit").prop('disabled', false);
 }
 
 
