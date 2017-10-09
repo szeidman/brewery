@@ -34,12 +34,13 @@ Ingredient.formSubmit = function(e){
 }
 
 Ingredient.success = function(json){
-  console.log(json)
+  let ingredient = new Ingredient(json);
+  $('.new-ingredient').append(ingredient.name);
 }
 
 
-Ingredient.error = function(){
-  debugger;
+Ingredient.error = function(resp){
+  console.log(resp)
 }
 
 function loadIngredients(e) {
