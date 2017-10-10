@@ -67,13 +67,10 @@ Ingredient.success = function(json){
       }
     });
     $("form#new_ingredient input:submit").prop('disabled', false);
-
-      //first word in any error messages index
-      // $('#new_ingredient label').each
-  //    $('#new_ingredient label').addClass('field_with_errors');
-  //  });
   } else {
-    let ingredient = new Ingredient(json);
+    let last = json[3];
+    let forNew = (last) ? last : json;
+    let ingredient = new Ingredient(forNew);
     $('.new-ingredient').append(ingredient.name);
     $("form#new_ingredient").each(function(){
       this.reset();
