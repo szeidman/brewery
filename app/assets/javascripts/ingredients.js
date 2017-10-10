@@ -76,7 +76,7 @@ Ingredient.success = function(json){
       this.reset();
     });
     $("form#new_ingredient input:submit").prop('disabled', false);
-    //TODO: change button text after the first time it's clicked (maybe)
+    $("form#new_ingredient input:submit").prop('value', 'Create Another Ingredient');
   }
 }
 
