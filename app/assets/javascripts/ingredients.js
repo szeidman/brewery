@@ -71,18 +71,27 @@ Ingredient.success = function(json){
     let last = json[3];
     let forNew = (last) ? last : json;
     let ingredient = new Ingredient(forNew);
-    $('.new-ingredient').append(ingredient.name);
+    ingredient.renderConfirm();
     $("form#new_ingredient").each(function(){
       this.reset();
     });
     $("form#new_ingredient input:submit").prop('disabled', false);
-    //TODO: change button text after the first time it's clicked
+    //TODO: change button text after the first time it's clicked (maybe)
   }
 }
 
+Ingredient.prototype.renderConfirm = function() {
+  let ingredientsConfirm = HandlebarsTemplates['ingredients_confirm']({
+    id: this.id,
+    name: this.name,
+    kind: this.kind,
+    origin: this.origin
+  });
+  $('.new-ingredient').append(ingredientsConfirm)
+}
 
 Ingredient.error = function(resp){
-  console.log(resp)
+  console.log("Error")
 }
 
 function loadIngredients(e) {
@@ -96,9 +105,6 @@ function loadIngredients(e) {
     $("#ingredients-index-list").html(ingredientsList)
   })
 }
-
-//get array of total ingredient IDs. Find length, find index number for data ID.
-//function showIngredietsFromBeer
 
 function showNextIngredient(e) {
   e.preventDefault();
@@ -121,7 +127,7 @@ function showNextIngredient(e) {
       });
       let nextAmount = nextBeerIngredient.amount;
 
-      //TODO: Beers: get all the beers for an ingredient, then remove the current beer from the array. Register a handlebars helper.
+      //TODO: Beers: get all the beers for an ingredient, then remove the current beer from the array. Register a handlebars helper to handle logic.
 
       let ingredientShow = HandlebarsTemplates['ingredients_show']({
         beer:   beerName,
