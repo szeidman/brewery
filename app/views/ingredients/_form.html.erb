@@ -1,11 +1,16 @@
 <div id="error_explanation">
+  <% if @ingredient.errors.any? %>
+    <h4><%= pluralize(@ingredient.errors.count, "error") %> kept this ingredient from saving:</h4>
+  <% else %>
     <h4></h4>
+  <% end %>
     <ul>
     <% @ingredient.errors.full_messages.each do |msg| %>
       <li><%= msg %></li>
     <% end %>
     </ul>
 </div>
+
 
 
 <% if !@beer %>
