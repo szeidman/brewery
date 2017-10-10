@@ -1,13 +1,12 @@
-<% if @ingredient.errors.any? %>
 <div id="error_explanation">
-  <h4><%= pluralize(@ingredient.errors.count, "error") %> kept this ingredient from saving:</h4>
-  <ul>
-  <% @ingredient.errors.full_messages.each do |msg| %>
-    <li><%= msg %></li>
-  <% end %>
-  </ul>
+    <h4></h4>
+    <ul>
+    <% @ingredient.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
 </div>
-<% end %>
+
 
 <% if !@beer %>
   <%= form_for @ingredient do |f| %>

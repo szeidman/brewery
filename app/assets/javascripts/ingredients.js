@@ -36,14 +36,33 @@ Ingredient.formSubmit = function(e){
 Ingredient.success = function(json){
   //TODO: Add code to parse the json if a new ingredient from a beer is made.
   //beer.ingredient_attributes.[amount, etc.]
-  debugger;
-  let ingredient = new Ingredient(json);
-  $('.new-ingredient').append(ingredient.name);
-  $("form#new_ingredient").each(function(){
-    this.reset();
-  });
-  $("form#new_ingredient input:submit").prop('disabled', false);
-  //TODO: change button text after the first time it's clicked
+  let error_messages = json.error_messages;
+  if (error_messages) {
+    let count = error_messages.length;
+    if (count > 1) {
+      plural = 'errors'
+    } else {
+      plural = 'error'
+    }
+    $('#error_explanation h4').text(count + ' ' + plural + ' kept this ingredient from saving:');
+    for (err in error_messages) {
+      $('#error_explanation ul').append('<li>' + error_messages[err] + '</li>');
+    };
+    $('#new_ingredient label').each(function(){
+      //if error_messages.some()$(this).textContent ===
+      //first word in any error messages index
+      // $('#new_ingredient label').each
+      $('#new_ingredient label').addClass('field_with_errors');
+    });
+  } else {
+    let ingredient = new Ingredient(json);
+    $('.new-ingredient').append(ingredient.name);
+    $("form#new_ingredient").each(function(){
+      this.reset();
+    });
+    $("form#new_ingredient input:submit").prop('disabled', false);
+    //TODO: change button text after the first time it's clicked
+  }
 }
 
 Ingredient.error = function(resp){
