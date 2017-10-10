@@ -38,6 +38,13 @@ Ingredient.success = function(json){
   //beer.ingredient_attributes.[amount, etc.]
   let errorMessages = json.error_messages;
   let errorType = json.error_type;
+
+  $('#error_explanation h4').text('');
+  $('#error_explanation ul').html('');
+  $('#new_ingredient label').each(function(){
+    $(this).removeClass('field_with_errors')
+  }
+  
   if (errorMessages) {
     let count = errorMessages.length;
     if (count > 1) {
@@ -55,11 +62,16 @@ Ingredient.success = function(json){
       errorFirsts.push(first[0]);
       };
     $('#new_ingredient label').each(function(){
-      debugger;
-      if (errorFirsts.includes(${this.innerText})) {
-        this.addClass('field_with_errors')
+      if (errorFirsts.includes(this.innerText)) {
+        $(this).addClass('field_with_errors')
       }
-    })
+    });
+    $("form#new_ingredient input:submit").prop('disabled', false);
+
+      //first word in any error messages index
+      // $('#new_ingredient label').each
+  //    $('#new_ingredient label').addClass('field_with_errors');
+  //  });
   } else {
     let ingredient = new Ingredient(json);
     $('.new-ingredient').append(ingredient.name);
