@@ -36,24 +36,30 @@ Ingredient.formSubmit = function(e){
 Ingredient.success = function(json){
   //TODO: Add code to parse the json if a new ingredient from a beer is made.
   //beer.ingredient_attributes.[amount, etc.]
-  let error_messages = json.error_messages;
-  if (error_messages) {
-    let count = error_messages.length;
+  let errorMessages = json.error_messages;
+  let errorType = json.error_type;
+  if (errorMessages) {
+    let count = errorMessages.length;
     if (count > 1) {
       plural = 'errors'
     } else {
       plural = 'error'
     }
     $('#error_explanation h4').text(count + ' ' + plural + ' kept this ingredient from saving:');
-    for (err in error_messages) {
-      $('#error_explanation ul').append('<li>' + error_messages[err] + '</li>');
+    for (err in errorMessages) {
+      $('#error_explanation ul').append('<li>' + errorMessages[err] + '</li>');
     };
+    let errorFirsts = [];
+    for (let i=0;i<errorMessages.length;i++) {
+      let first = errorMessages[i].split(" ");
+      errorFirsts.push(first[0]);
+      };
     $('#new_ingredient label').each(function(){
-      //if error_messages.some()$(this).textContent ===
-      //first word in any error messages index
-      // $('#new_ingredient label').each
-      $('#new_ingredient label').addClass('field_with_errors');
-    });
+      debugger;
+      if (errorFirsts.includes(${this.innerText})) {
+        this.addClass('field_with_errors')
+      }
+    })
   } else {
     let ingredient = new Ingredient(json);
     $('.new-ingredient').append(ingredient.name);
@@ -64,6 +70,7 @@ Ingredient.success = function(json){
     //TODO: change button text after the first time it's clicked
   }
 }
+
 
 Ingredient.error = function(resp){
   console.log(resp)
