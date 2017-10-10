@@ -43,8 +43,8 @@ Ingredient.success = function(json){
   $('#error_explanation ul').html('');
   $('#new_ingredient label').each(function(){
     $(this).removeClass('field_with_errors')
-  }
-  
+  });
+
   if (errorMessages) {
     let count = errorMessages.length;
     if (count > 1) {
