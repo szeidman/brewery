@@ -18,6 +18,7 @@ function Ingredient(attributes) {
  }
 
 Ingredient.formSubmit = function(e){
+  debugger;
   e.preventDefault();
   var $form = $(this);
   var action = $form.attr("action");
@@ -34,14 +35,16 @@ Ingredient.formSubmit = function(e){
 }
 
 Ingredient.success = function(json){
+  //TODO: Add code to parse the json if a new ingredient from a beer is made.
+  //beer.ingredient_attributes.[amount, etc.]
   let ingredient = new Ingredient(json);
   $('.new-ingredient').append(ingredient.name);
   $("form#new_ingredient").each(function(){
     this.reset();
   });
   $("form#new_ingredient input:submit").prop('disabled', false);
+  //TODO: change button text after the first time it's clicked
 }
-
 
 Ingredient.error = function(resp){
   console.log(resp)
