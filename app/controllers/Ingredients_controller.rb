@@ -64,25 +64,37 @@ class IngredientsController < ApplicationController
             @ingredient.save
             redirect_to beer_ingredients_path(@beer), notice: "New beer ingredient added."
           else
-            render :new
+            respond_to do |f|
+              f.html {render :new}
+              f.json {render json: {error_messages: @ingredient.errors.full_messages, error_type: @ingredient.errors}}
+            end
           end
         else
           if @ingredient.save
             @ingredient.save
             redirect_to beer_ingredients_path(@beer), notice: "New beer ingredient added."
           else
-            render :new
+            respond_to do |f|
+              f.html {render :new}
+              f.json {render json: {error_messages: @ingredient.errors.full_messages, error_type: @ingredient.errors}}
+            end
           end
         end
       else
-        render :new
+        respond_to do |f|
+          f.html {render :new}
+          f.json {render json: {error_messages: @ingredient.errors.full_messages, error_type: @ingredient.errors}}
+        end
       end
     else
       @ingredient = Ingredient.new(ingredient_params)
       if @ingredient.save
         redirect_to @ingredient
       else
-        render :new
+        respond_to do |f|
+          f.html {render :new}
+          f.json {render json: {error_messages: @ingredient.errors.full_messages, error_type: @ingredient.errors}}
+        end
       end
     end
   end
