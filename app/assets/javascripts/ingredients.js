@@ -100,7 +100,8 @@ function loadIngredients(e) {
   $.get(`/beers/${dataID}.json`, function (data) {
     let ingredientsList = HandlebarsTemplates['ingredients_list']({
       ingredients: data.ingredients,
-      beerId: data.id
+      beerId: data.id,
+      beerName: data.name
     });
     $("#ingredients-index-list").html(ingredientsList)
   })
@@ -143,7 +144,7 @@ function showNextIngredient(e) {
     });
   } else {
     $.get(`/ingredients.json`, function (data) {
-      let ingredients = data;
+      let ingredients = data.sort((a,b) => {return (a.name).localeCompare(b.name)});
       let inArray = ingredients.find(ingredient => {
          return ingredient.id === ingredientID
        })
