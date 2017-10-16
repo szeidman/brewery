@@ -121,21 +121,12 @@ function showNextIngredient(e) {
   let nextId = ingredientIDs[nextPosition] ? ingredientIDs[nextPosition] : ingredientIDs[0];
   if (beerID) {
     $.get(`/beers/${beerID}/ingredients/${nextId}.json`, function (data) {
-      // let beerName = data.name; change to data id array let ingredients = data;
-      //let beerIngredients = data.beer_ingredients;find beer ingredient with beer id of beer id
+
       let ingredient = new Ingredient(data);
-      function findBeerIngredientByID(beerIngredient) {
-        return beerIngredient.beer_id === beerID;
-      }
-      function findBeerByID(beer) {
-        return beer.id === beerID;
-      }
-      function excludeBeerByID(beer) {
-        return beer.id !== beerID;
-      }
-      let beer = ingredient.beers.find(findBeerByID);
-      let otherBeers = ingredient.beers.filter(excludeBeerByID);
-      let beerIngredient = ingredient.beerIngredients.find(findBeerIngredientByID);
+
+      let beer = ingredient.beers.find(beer => beer.id === beerID);
+      let otherBeers = ingredient.beers.filter(beer => beer.id !== beerID);
+      let beerIngredient = ingredient.beerIngredients.find(beerIngredient => beerIngredient.beer_id === beerID);
 
       let ingredientShow = HandlebarsTemplates['ingredients_show']({
         beerID:     beerID,
