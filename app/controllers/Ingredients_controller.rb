@@ -9,7 +9,7 @@ class IngredientsController < ApplicationController
          @ingredients = @beer.ingredients
          respond_to do |format|
            format.html { render :index }
-           format.json { render json: @ingredients }
+           format.json { render json: @ingredients, each_serializer: SimpleIngredientSerializer }
          end
        else
          redirect_to beers_path, alert: "Beer not found."
@@ -18,7 +18,7 @@ class IngredientsController < ApplicationController
        @ingredients = Ingredient.all
        respond_to do |format|
          format.html { render :index }
-         format.json { render json: @ingredients }
+         format.json { render json: @ingredients, each_serializer: SimpleIngredientSerializer }
        end
      end
   end

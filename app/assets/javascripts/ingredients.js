@@ -97,11 +97,9 @@ Ingredient.error = function(resp){
 function loadIngredients(e) {
   e.preventDefault();
   let dataID = $(".see-ingredients-link").attr("data-id");
-  $.get(`/beers/${dataID}.json`, function (data) {
+  $.get(`/beers/${dataID}/ingredients.json`, function (data) {
     let ingredientsList = HandlebarsTemplates['ingredients_list']({
-      ingredients: data.ingredients,
-      beerId: data.id,
-      beerName: data.name
+      ingredients: data,
     });
     $("#ingredients-index-list").html(ingredientsList)
   })
