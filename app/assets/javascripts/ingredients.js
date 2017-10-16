@@ -119,6 +119,7 @@ function showNextIngredient(e) {
 
   if (beerID) {
     $.get(`/beers/${beerID}/ingredients.json`, function (data) {
+      let ingredients = data.sort((a,b) => {return (a.name).localeCompare(b.name)});
       let beerName = data.name;
       // change to data id array let ingredients = data;
       let beerIngredients = data.beer_ingredients;
