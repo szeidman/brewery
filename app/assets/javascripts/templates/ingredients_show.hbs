@@ -9,7 +9,15 @@
 {{/if}}
 <br><br>
 <h4>
-  {{#if beer}}
+  {{#if beerID}}
+    {{#if otherBeers}}
+      <h4>Also found in:</h4>
+      {{#otherBeers}}
+        <p>{{name}}</p>
+      {{/otherBeers}}
+    {{else}}
+      <p>{{beerName}} is our only beer with this ingredient.</p>
+    {{/if}}
   {{else}}
     {{#if beers}}
       Found in:

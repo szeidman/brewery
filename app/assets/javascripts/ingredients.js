@@ -130,17 +130,22 @@ function showNextIngredient(e) {
       function findBeerByID(beer) {
         return beer.id === beerID;
       }
+      function excludeBeerByID(beer) {
+        return beer.id !== beerID;
+      }
       let beer = ingredient.beers.find(findBeerByID);
+      let otherBeers = ingredient.beers.filter(excludeBeerByID);
       let beerIngredient = ingredient.beerIngredients.find(findBeerIngredientByID);
 
       let ingredientShow = HandlebarsTemplates['ingredients_show']({
-        beerID:   beerID,
-        beerName: beer.name,
-        ingID:    ingredient.id,
-        name:     ingredient.name,
-        kind:     ingredient.kind,
-        origin:   ingredient.origin,
-        amount:   beerIngredient.amount
+        beerID:     beerID,
+        beerName:   beer.name,
+        otherBeers: otherBeers,
+        ingID:      ingredient.id,
+        name:       ingredient.name,
+        kind:       ingredient.kind,
+        origin:     ingredient.origin,
+        amount:     beerIngredient.amount
       });
       $(".show-ingredient").html(ingredientShow);
       $(".js-next").data('ing', ingredient.id)
