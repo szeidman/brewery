@@ -98,8 +98,10 @@ function loadIngredients(e) {
   e.preventDefault();
   let dataID = $(".see-ingredients-link").attr("data-id");
   $.get(`/beers/${dataID}/ingredients.json`, function (data) {
+    let ingredients = data.sort((a,b) => {return (a.name).localeCompare(b.name)});
     let ingredientsList = HandlebarsTemplates['ingredients_list']({
-      ingredients: data,
+      ingredients: ingredients,
+      beerId: dataID
     });
     $("#ingredients-index-list").html(ingredientsList)
   })
