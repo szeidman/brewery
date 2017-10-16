@@ -125,7 +125,7 @@ class IngredientsController < ApplicationController
       if @ingredient = @beer.ingredients.find_by(id: params[:id])
         @amount = @beer.beer_ingredients.find_by(ingredient_id: params[:id]).amount
         ingredients = @beer.ingredients
-        sorted_ingredients = ingredients.sort{|a, b| a.name <=> b.name}
+        sorted_ingredients = ingredients.name_order
         @ingredient_ids = sorted_ingredients.collect{|ingredient| ingredient.id}
         respond_to do |format|
           format.html { render :show }
@@ -137,6 +137,7 @@ class IngredientsController < ApplicationController
     else
       set_ingredient
       ingredients = Ingredient.all
+      sorted_ingredients = ingredients.name_order
       @ingredient_ids = ingredients.collect{|ingredient| ingredient.id}
       respond_to do |format|
         format.html { render :show }

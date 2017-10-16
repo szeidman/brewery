@@ -38,7 +38,6 @@ Ingredient.formSubmit = function(e){
 Ingredient.success = function(json){
   //TODO: Add code to parse the json if a new ingredient from a beer is made.
   //beer.ingredient_attributes.[amount, etc.]
-  debugger;
   let errorMessages = json.error_messages;
   let errorType = json.error_type;
 
@@ -88,8 +87,9 @@ Ingredient.prototype.renderConfirm = function() {
     id: this.id,
     name: this.name,
     kind: this.kind,
-    origin: this.origin
-    //amount: this.amount
+    origin: this.origin,
+    amount: this.beerIngredients[0].amount,
+    beer: this.beers[0].name
   });
   $('.new-ingredient').append(ingredientsConfirm)
 }
@@ -118,8 +118,7 @@ function showNextIngredient(e) {
   let ingredientIDs = parseInt($(".js-ingredient-ids").attr("data-ingredient-ids"));
 
   if (beerID) {
-    $.get(`/beers/${beerID}/ingredients.json`, function (data) {
-      let ingredients = data.sort((a,b) => {return (a.name).localeCompare(b.name)});
+    $.get(`/beers/${beerID}/ingredients/${ingredientID}.json`, function (data) {
       let beerName = data.name;
       // change to data id array let ingredients = data;
       let beerIngredients = data.beer_ingredients;
@@ -148,8 +147,7 @@ function showNextIngredient(e) {
       $(".js-next").attr('data-ing', nextIngredient.id)
     });
   } else {
-    $.get(`/ingredients.json`, function (data) {
-      let ingredients = data.sort((a,b) => {return (a.name).localeCompare(b.name)});
+    $.get(`/ingredients/${ingredientID}.json`, function (data) {
       let inArray = ingredients.find(ingredient => {
          return ingredient.id === ingredientID
        })
