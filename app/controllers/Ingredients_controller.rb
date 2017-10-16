@@ -62,7 +62,10 @@ class IngredientsController < ApplicationController
           old_beer_ingredient.delete
           if @ingredient.save
             @ingredient.save
-            redirect_to beer_ingredients_path(@beer), notice: "New beer ingredient added."
+            respond_to do |f|
+              f.html {redirect_to beer_ingredients_path(@beer), notice: "New beer ingredient added."}
+              f.json {render json: @ingredient}
+            end
           else
             respond_to do |f|
               f.html {render :new}
@@ -72,7 +75,10 @@ class IngredientsController < ApplicationController
         else
           if @ingredient.save
             @ingredient.save
-            redirect_to beer_ingredients_path(@beer), notice: "New beer ingredient added."
+            respond_to do |f|
+              f.html {redirect_to beer_ingredients_path(@beer), notice: "New beer ingredient added."}
+              f.json {render json: @ingredient}
+            end
           else
             respond_to do |f|
               f.html {render :new}
@@ -89,7 +95,10 @@ class IngredientsController < ApplicationController
     else
       @ingredient = Ingredient.new(ingredient_params)
       if @ingredient.save
-        redirect_to @ingredient
+        respond_to do |f|
+          f.html {redirect_to @ingredient}
+          f.json {render json: @ingredient}
+        end
       else
         respond_to do |f|
           f.html {render :new}
