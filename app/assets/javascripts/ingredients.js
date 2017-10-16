@@ -134,7 +134,6 @@ function showNextIngredient(e) {
       let beerIngredient = ingredient.beerIngredients.find(findBeerIngredientByID);
 
       let ingredientShow = HandlebarsTemplates['ingredients_show']({
-        //beer:   beerName,
         beerID:   beerID,
         beerName: beer.name,
         ingID:    ingredient.id,
@@ -147,20 +146,18 @@ function showNextIngredient(e) {
       $(".js-next").data('ing', ingredient.id)
     });
   } else {
-    $.get(`/ingredients/${ingredientID}.json`, function (data) {
-      debugger;
-      let position = ingredientIDs.indexOf(ingredientID);
-      let nextPosition = ++position;
-      let nextId = ingredientIDs[nextPosition] ? ingredientIDs[nextPosition] : ingredientIDs[0];
+    $.get(`/ingredients/${nextId}.json`, function (data) {
+      let ingredient = new Ingredient(data);
+
       let ingredientShow = HandlebarsTemplates['ingredients_show']({
-        ingID:  nextIngredient.id,
-        name:   nextIngredient.name,
-        kind:   nextIngredient.kind,
-        origin: nextIngredient.origin,
-        beers:  nextIngredient.beers
+        ingID:  ingredient.id,
+        name:   ingredient.name,
+        kind:   ingredient.kind,
+        origin: ingredient.origin,
+        beers:  ingredient.beers
     });
     $(".show-ingredient").html(ingredientShow);
-    $(".js-next").attr("data-ing", nextIngredient.id);
+    $(".js-next").data('ing', ingredient.id)
     });
   }
 }

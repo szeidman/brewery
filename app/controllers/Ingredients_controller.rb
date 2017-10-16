@@ -138,7 +138,7 @@ class IngredientsController < ApplicationController
       set_ingredient
       ingredients = Ingredient.all
       sorted_ingredients = ingredients.name_order
-      @ingredient_ids = ingredients.collect{|ingredient| ingredient.id}
+      @ingredient_ids = sorted_ingredients.collect{|ingredient| ingredient.id}
       respond_to do |format|
         format.html { render :show }
         format.json { render json: @ingredient }
