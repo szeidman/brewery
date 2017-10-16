@@ -15,6 +15,8 @@ function Ingredient(attributes) {
    this.name = attributes.name;
    this.kind = attributes.kind;
    this.origin = attributes.origin;
+   this.beerIngredients = attributes.beer_ingredients;
+   this.beers = attributes.beers
  }
 
 Ingredient.formSubmit = function(e){
@@ -36,6 +38,7 @@ Ingredient.formSubmit = function(e){
 Ingredient.success = function(json){
   //TODO: Add code to parse the json if a new ingredient from a beer is made.
   //beer.ingredient_attributes.[amount, etc.]
+  debugger;
   let errorMessages = json.error_messages;
   let errorType = json.error_type;
 
@@ -86,6 +89,7 @@ Ingredient.prototype.renderConfirm = function() {
     name: this.name,
     kind: this.kind,
     origin: this.origin
+    //amount: this.amount
   });
   $('.new-ingredient').append(ingredientsConfirm)
 }
@@ -116,9 +120,9 @@ function showNextIngredient(e) {
   if (beerID) {
     $.get(`/beers/${beerID}/ingredients.json`, function (data) {
       let beerName = data.name;
-      let ingredients = data;
+      // change to data id array let ingredients = data;
       let beerIngredients = data.beer_ingredients;
-
+      //find beer ingredient with beer id of beer id
       let inArray = ingredients.find(ingredient => {
          return ingredient.id === ingredientID
        })
@@ -129,8 +133,6 @@ function showNextIngredient(e) {
         return beerIngredient.ingredient_id === ingredientID
       });
       let nextAmount = nextBeerIngredient.amount;
-
-      //TODO: Beers: get all the beers for an ingredient, then remove the current beer from the array. Register a handlebars helper to handle logic.
 
       let ingredientShow = HandlebarsTemplates['ingredients_show']({
         beer:   beerName,
