@@ -111,10 +111,12 @@ function showNextIngredient(e) {
   e.preventDefault();
   let beerID = parseInt($(".js-next").attr("data-beer"));
   let ingredientID = parseInt($(".js-next").attr("data-ing"));
+  let ingredientIDs = parseInt($(".js-ingredient-ids").attr("data-ingredient-ids"));
+
   if (beerID) {
-    $.get(`/beers/${beerID}.json`, function (data) {
+    $.get(`/beers/${beerID}/ingredients.json`, function (data) {
       let beerName = data.name;
-      let ingredients = data.ingredients;
+      let ingredients = data;
       let beerIngredients = data.beer_ingredients;
 
       let inArray = ingredients.find(ingredient => {

@@ -124,6 +124,7 @@ class IngredientsController < ApplicationController
     if has_beer
       if @ingredient = @beer.ingredients.find_by(id: params[:id])
         @amount = @beer.beer_ingredients.find_by(ingredient_id: params[:id]).amount
+        @ingredient_ids = @beer.ingredients.collect{|ingredient| ingredient.id}
         respond_to do |format|
           format.html { render :show }
           format.json { render json: @ingredient }
@@ -133,6 +134,7 @@ class IngredientsController < ApplicationController
       end
     else
       set_ingredient
+      @ingredient_ids = Ingredient.all.collect{|ingredient| ingredient.id}
       respond_to do |format|
         format.html { render :show }
         format.json { render json: @ingredient }
