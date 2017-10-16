@@ -113,47 +113,45 @@ function loadIngredients(e) {
 
 function showNextIngredient(e) {
   e.preventDefault();
-  let beerID = parseInt($(".js-next").attr("data-beer"));
-  let ingredientID = parseInt($(".js-next").attr("data-ing"));
-  let ingredientIDs = parseInt($(".js-ingredient-ids").attr("data-ingredient-ids"));
-
+  let beerID = $(".js-next").data("beer");
+  let ingredientID = $(".js-next").data("ing");
+  let ingredientIDs = $("#js-ingredient-ids").data("ingredient-ids");
+  let position = ingredientIDs.indexOf(ingredientID);
+  let nextPosition = ++position;
+  let nextId = ingredientIDs[nextPosition] ? ingredientIDs[nextPosition] : ingredientIDs[0];
   if (beerID) {
-    $.get(`/beers/${beerID}/ingredients/${ingredientID}.json`, function (data) {
-      let beerName = data.name;
-      // change to data id array let ingredients = data;
-      let beerIngredients = data.beer_ingredients;
-      //find beer ingredient with beer id of beer id
-      let inArray = ingredients.find(ingredient => {
-         return ingredient.id === ingredientID
-       })
-      let position = ingredients.indexOf(inArray);
-      let nextPosition = ++position;
-      let nextIngredient = ingredients[nextPosition] ? ingredients[nextPosition] : ingredients[0];
-      let nextBeerIngredient = beerIngredients.find(beerIngredient => {
-        return beerIngredient.ingredient_id === ingredientID
-      });
-      let nextAmount = nextBeerIngredient.amount;
+    $.get(`/beers/${beerID}/ingredients/${nextId}.json`, function (data) {
+      // let beerName = data.name; change to data id array let ingredients = data;
+      //let beerIngredients = data.beer_ingredients;find beer ingredient with beer id of beer id
+      let ingredient = new Ingredient(data);
+      function findBeerIngredientByID(beerIngredient) {
+        return beerIngredient.beer_id === beerID;
+      }
+      function findBeerByID(beer) {
+        return beer.id === beerID;
+      }
+      let beer = ingredient.beers.find(findBeerByID);
+      let beerIngredient = ingredient.beerIngredients.find(findBeerIngredientByID);
 
       let ingredientShow = HandlebarsTemplates['ingredients_show']({
-        beer:   beerName,
-        beerID: beerID,
-        ingID:  nextIngredient.id,
-        name:   nextIngredient.name,
-        kind:   nextIngredient.kind,
-        origin: nextIngredient.origin,
-        amount: nextAmount
+        //beer:   beerName,
+        beerID:   beerID,
+        beerName: beer.name,
+        ingID:    ingredient.id,
+        name:     ingredient.name,
+        kind:     ingredient.kind,
+        origin:   ingredient.origin,
+        amount:   beerIngredient.amount
       });
       $(".show-ingredient").html(ingredientShow);
-      $(".js-next").attr('data-ing', nextIngredient.id)
+      $(".js-next").data('ing', ingredient.id)
     });
   } else {
     $.get(`/ingredients/${ingredientID}.json`, function (data) {
-      let inArray = ingredients.find(ingredient => {
-         return ingredient.id === ingredientID
-       })
-      let position = ingredients.indexOf(inArray);
+      debugger;
+      let position = ingredientIDs.indexOf(ingredientID);
       let nextPosition = ++position;
-      let nextIngredient = ingredients[nextPosition] ? ingredients[nextPosition] : ingredients[0];
+      let nextId = ingredientIDs[nextPosition] ? ingredientIDs[nextPosition] : ingredientIDs[0];
       let ingredientShow = HandlebarsTemplates['ingredients_show']({
         ingID:  nextIngredient.id,
         name:   nextIngredient.name,

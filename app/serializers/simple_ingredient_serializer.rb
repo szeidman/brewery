@@ -1,3 +1,3 @@
 class SimpleIngredientSerializer < ActiveModel::Serializer
-  attributes :name, :kind
+  attributes :id, :name, :kind
 end
