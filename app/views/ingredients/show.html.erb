@@ -16,7 +16,7 @@
   <p><%= button_to "Back to #{@beer.name}", @beer, method: :get if @beer %></p>
 </div>
 <% if @beer %>
-<p><button type="button" class="js-next" data-beer="<%=@beer.id%>" data-ing="<%=@ingredient.id%>">Jump to next ingredient</button></p>
+<p><button type="button" class="js-next" data-beer-id="<%=@beer.id%>" data-ing-id="<%=@ingredient.id%>">Jump to next ingredient</button></p>
 <% else %>
 <p><button type="button" class="js-next" data-ing="<%=@ingredient.id%>">Jump to next ingredient</button></p>
 <% end %>

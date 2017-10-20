@@ -83,13 +83,15 @@ Ingredient.success = function(json){
 }
 
 Ingredient.prototype.renderConfirm = function() {
+  let amount = (this.beerIngredients[0]) ? this.beerIngredients[0].amount : null;
+  let beer = (this.beers[0]) ? this.beers[0].name : null;
   let ingredientsConfirm = HandlebarsTemplates['ingredients_confirm']({
     id: this.id,
     name: this.name,
     kind: this.kind,
     origin: this.origin,
-    amount: this.beerIngredients[0].amount,
-    beer: this.beers[0].name
+    amount: amount,
+    beer: beer
   });
   $('.new-ingredient').append(ingredientsConfirm)
 }
@@ -100,12 +102,12 @@ Ingredient.error = function(resp){
 
 function loadIngredients(e) {
   e.preventDefault();
-  let dataID = $(".see-ingredients-link").attr("data-id");
-  $.get(`/beers/${dataID}/ingredients.json`, function (data) {
-    let ingredients = data.sort((a,b) => {return (a.name).localeCompare(b.name)});
+  let beerID = $(".see-ingredients-link").attr("data-beer-id");
+  $.get(`/beers/${beerID}/ingredients.json`, function (ingredients) {
+    let sortedIngredients = ingredients.sort((a,b) => a.name.localeCompare(b.name));
     let ingredientsList = HandlebarsTemplates['ingredients_list']({
-      ingredients: ingredients,
-      beerId: dataID
+      ingredients: sortedIngredients,
+      beerId: beerID
     });
     $("#ingredients-index-list").html(ingredientsList)
   })
@@ -113,8 +115,8 @@ function loadIngredients(e) {
 
 function showNextIngredient(e) {
   e.preventDefault();
-  let beerID = $(".js-next").data("beer");
-  let ingredientID = $(".js-next").data("ing");
+  let beerID = $(".js-next").data("beer-id");
+  let ingredientID = $(".js-next").data("ing-id");
   let ingredientIDs = $("#js-ingredient-ids").data("ingredient-ids");
   let position = ingredientIDs.indexOf(ingredientID);
   let nextPosition = ++position;
