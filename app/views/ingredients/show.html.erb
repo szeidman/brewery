@@ -12,8 +12,8 @@
   <%= button_to "Edit Ingredient", edit_ingredient_path, method: :get if current_user && !@beer %>
   <%= button_to "Delete Ingredient", ingredient_path(@ingredient), method: :delete if current_user && !@beer%>
   <br>
-  <%= button_to "Go to #{@beer.name} ingredients", beer_ingredients_path(@beer), method: :get if @beer %>
-  <%= button_to "Back to #{@beer.name}", @beer, method: :get if @beer %>
+  <p><%= button_to "Go to #{@beer.name} ingredients", beer_ingredients_path(@beer), method: :get if @beer %></p>
+  <p><%= button_to "Back to #{@beer.name}", @beer, method: :get if @beer %></p>
 </div>
 <% if @beer %>
 <p><button type="button" class="js-next" data-beer="<%=@beer.id%>" data-ing="<%=@ingredient.id%>">Jump to next ingredient</button></p>

@@ -13,7 +13,7 @@
     {{#if otherBeers}}
       <h4>Also found in:</h4>
       {{#otherBeers}}
-        <p>{{name}}</p>
+        <p><a href="/beers/{{id}}">{{name}}</p>
       {{/otherBeers}}
     {{else}}
       <p>{{beerName}} is our only beer with this ingredient.</p>
@@ -30,4 +30,7 @@
     <p><a href="/beers/{{id}}">{{name}}</p>
   {{/beers}}
 <br>
+{{#if amount}}
+  <p><button type="button" method="get" action="/beers/{{beerID}}/ingredients">Go to {{beerName}} ingredients</button></p>
+{{/if}}
 <p><button type="button" onclick="window.history.back()">Back</button></p>
