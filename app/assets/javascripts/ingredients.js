@@ -141,7 +141,7 @@ function showNextIngredient(e) {
         amount:     beerIngredient.amount
       });
       $(".show-ingredient").html(ingredientShow);
-      $(".js-next").data('ing', ingredient.id)
+      $(".js-next").data('ing-id', ingredient.id)
     });
   } else {
     $.get(`/ingredients/${nextId}.json`, function (data) {
@@ -155,7 +155,7 @@ function showNextIngredient(e) {
         beers:  ingredient.beers
     });
     $(".show-ingredient").html(ingredientShow);
-    $(".js-next").data('ing', ingredient.id)
+    $(".js-next").data('ing-id', ingredient.id)
     });
   }
 }
