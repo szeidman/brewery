@@ -1,0 +1,5 @@
+{{#if amount}}
+<h4> Successfully updated the {{kind}} in {{beer}} to {{amount}} kg of <strong><a href="/ingredients/{{id}}">{{name}}</a></strong> from {{origin}}.</h4>
+{{else}}
+<h4> Successfully created <strong><a href="/ingredients/{{id}}">{{name}}</a></strong>, {{kind}} from {{origin}}.</h4>
+{{/if}}
