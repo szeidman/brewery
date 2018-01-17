@@ -17,7 +17,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <% if !!current_user %>
-          <li class="navbar-text navbar-right"><span>Logged in as <%= current_user.name -%> &nbsp; (<%=link_to "Sign Out", destroy_user_session_path, method: 'delete' %>) &nbsp; </span></li>
+          <li class="navbar-text navbar-right"><span>Logged in as <%= current_user.name || current_user.email -%> &nbsp; (<%=link_to "Sign Out", destroy_user_session_path, method: 'delete' %>) &nbsp; </span></li>
         <% else %>
           <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Brewers<span class="caret"></span></a>
