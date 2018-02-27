@@ -6,6 +6,6 @@ The application uses a Rails API with ActiveModel serializers. Portions of the a
 
 * Ruby version: ruby 2.3.3p222
 
-* To use: Run bundle install and rake db:migrate. For Facebook OAuth integration you will need a key and secret from Facebook's developers site.
+* To use: Run bundle install and rake db:migrate. For Github OAuth integration you will need a key and secret from Github's developer settings.
 
 * MIT License
