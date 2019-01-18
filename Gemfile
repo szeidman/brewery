@@ -35,6 +35,14 @@ gem 'jbuilder', '~> 2.5'
 gem 'active_model_serializers'
 gem 'handlebars_assets'
 
+gem "sprockets", ">= 3.7.2"
+gem "rubyzip", ">= 1.2.2"
+gem "ffi", ">= 1.9.24"
+gem "activejob", ">= 5.1.6.1"
+gem "rack", ">= 2.0.6"
+gem "rails-html-sanitizer", ">= 1.0.4"
+gem "loofah", ">= 2.2.3"
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
